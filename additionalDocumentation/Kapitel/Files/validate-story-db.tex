@@ -1,0 +1,76 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen zum Zugriff auf die Tabelle mit Validierungsdaten zu Geschichten.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc-db.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-db-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{insertValidateStories}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$story\_id & numerischer Identifikator einer Geschichte \\ \hline
+		\$value     & Wert der Validierung \\ \hline
+		\$username  & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt einer Geschichte eine Validierung hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsdaten zu Geschichten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getUservalidationsStory}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$sid & numerischer Identifikator einer Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft alle Validatoren einer Geschichte ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsdaten zu Geschichten
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getValidateSumStories}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$sid & numerischer Identifikator einer Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft die Summe aller Validierungen einer Geschichte ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsdaten zu Geschichten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{deleteStoryValidates}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$sid & numerischer Identifikator einer Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht alle Validierungen einer Geschichte. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsdaten zu Geschichten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.

@@ -1,0 +1,76 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen zum Zugriff auf die Tabelle mit Validierungsdaten zu Bildern.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc-db.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-db-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{insertValidatePictures}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$picture\_id & numerischer Identifikator eines Bildes \\ \hline
+		\$value       & Wert der Validierung \\ \hline
+		\$username    & Nutzername des Validerenden \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt einem Bild eine Validierung hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsdaten zu Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{deleteValidatePictures}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$pid & numerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht alle Validierungen eines Bildes. Die Funktion hat Auswirkungen auf folgende Quellen: 
+\begin{itemize}
+	\item Tabelle mit Validierungsdaten zu Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getUservalidationsPictures}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$pid & numerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft alle Validierenden eines Bildes ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsdaten zu Bildern
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getValidateSumPictures}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$pid & numerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft die Summe aller Validierungen eines Bildes ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsdaten zu Bildern
+\end{itemize}
+Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.

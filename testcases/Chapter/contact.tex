@@ -1,0 +1,31 @@
+\begin{usecase}
+
+\addtitle{Kontaktanfrage absenden} 
+
+%Primary Actor: Calls on the system to deliver its services.
+\addfield{Benutzer:}{Endnutzer, Mitarbeiter, Administratoren}
+\addfield{Endbenutzergruppen:}{nicht Authentifiziert, Authentifiziert, Freigeschaltet}
+
+%Preconditions: What must be true on start and worth telling the reader?
+\addfield{Vorbedingungen:}{Login erfolgreich, Kontakt aufrufen}
+%when multiple
+%\additemizedfield{Preconditions:}{} 
+
+%Main Success Scenario: A typical, unconditional happy path scenario of success.
+\addscenario{Szenario:}{
+	\checkeditem Captcha-Code lesen und eingeben
+	\checkeditem Nachricht und Betreff eingeben
+	\checkeditem {\glqq Absenden\grqq}-Button betätigen
+}
+
+%Extensions: Alternate scenarios of success or failure.
+\addscenario{Erweiterung:}{
+	\checkeditem[1.a] {\glqq Neues Captcha\grqq}-Button betätigen, Captcha lesen und eingeben
+	\checkeditem[1.b] Falschen Captcha-Code eingeben
+	\checkeditem[2.a] Nachricht, aber keinen Betreff eingeben
+	\checkeditem[2.b] Betreff, aber keine Nachricht eingeben
+	\checkeditem[2.c] keine Nachricht und keinen Betreff eingeben
+}
+
+
+\end{usecase}

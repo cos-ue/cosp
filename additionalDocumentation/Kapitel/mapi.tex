@@ -1,0 +1,803 @@
+\newpage
+\section{Steuerunsg API-Spezifikation}\label{mapi}
+\subsection{Beschreibung}Diese API dient der Kommunikation zwischen dem Frontend und dem Backend von {\glqq COSP\grqq}. Sie unterstützt Funktionen zur Nutzer-, Rollen-, Ränge- und Modul-Verwaltung. Des weiteren unterstützt sie auch das Abfragen einiger statistischer Daten. Diese API ist nur für angemeldete und authorisierte Nutzer verfügbar.
+\subsection{Befehlsübersicht}
+\begin{longtable}[H]{|c|p{12cm}|}
+		\hline
+		\textbf{Api-Befehl} & \textbf{Kurzbeschreibung}              \\ \hline
+		cur                 & Nutzerrolle ändern          \\ \hline
+		anr                 & Neue Rolle hinzufügen            \\ \hline
+		eer                 & Bestehende Rolle ändern \\ \hline
+		der                 & Rolle löschen \\ \hline
+		cup                 & Nutzerpasswort ändern \\ \hline
+		teu                 & Nutzer Aktivieren oder Deaktivieren (Toggle) \\ \hline
+		rup                 & Reset Nutzerpasswort \\ \hline
+		adr                 & Neuen Rang anlegen \\ \hline
+		dra                 & Rang löschen \\ \hline
+		era                 & Bestehenden Rang ändern \\ \hline
+		gsd                 & Statistische Daten abfragen \\ \hline
+		gar                 & Alle Rollennamen abfragen \\ \hline
+		grn                 & Alle Rangnamen abfragen \\ \hline
+		cpa                 & Anfordern eines Captcha-Codes als Base64 endocdiertes Bild \\ \hline
+        cmg                 & Kontaktnachricht absenden \\ \hline
+        rns                 & Alle Module, welche keinen spezialisierten Namen bei einem Rang haben \\ \hline
+        rna                 & Modulbasierte Namen eines Ranges abfragen \\ \hline
+        imr                 & Modulbasierte Namen eines Ranges hinzufügen\\ \hline
+        dmr                 & Modulbasierte Namen eines Ranges löschen\\ \hline
+        gap                 & Abfrage aller Daten einer API\\ \hline
+        sap                 & Speichert Daten einer API\\ \hline
+        gmr                 & Fragt alle Module ab, für welche ein Nutzer Rechte hat\\ \hline
+        gam                 & Name und ID aller APIs abfragen\\ \hline
+        sar                 & Gibt alle für den Nutzer vergebbaren Rollen zurück\\ \hline
+        smr                 & Speichert eine Modul-Rolle eines Benutzers ab\\ \hline
+        drm                 & Löscht eine Modul-Rolle\\ \hline
+        smv                 & Mailvalidierungsstatus setzen\\ \hline
+        umr					& Aktualisiere Modulberechtigungen \\ \hline
+        dsr					& Deaktivierungsstatus eines Nutzers für ein Modul setzen \\ \hline
+        cna					& Anlegen eines neuen Moduls beziehungsweise einer neuen API. \\ \hline
+        cma					& Prüft ob eine Mailadresse bereits verwendet wird. \\ \hline
+\end{longtable}
+\newpage
+\subsection{Befehle}
+\subsubsection{Nutzerrolle ändern}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Rolle eines Nutzers zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & cur                & Nutzerrolle ändern \\ \hline
+		username            & string            &                    & Nutzername \\ \hline
+		role                & int               &                    & Identifikator der Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		type                & string           & cur             & Nutzerrolle ändern \\ \hline
+		username            & string           &                 & Nutzername \\ \hline
+		role                & int              &                 & Identifikator der Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Neue Rolle anlegen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine neue Rolle hinzuzufügen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & anr                & Neue Rolle anlegen \\ \hline
+		name                & string            &                    & Rollenname \\ \hline
+		value               & int               &                    & Rollenwert \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & bool             &                 & Wahr, wenn Erfolgreich \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Bestehende Rolle ändern}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine einzelne bestehende Rolle zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & eer                & Rolle ändern \\ \hline
+		name                & string            &                    & Rollenname \\ \hline
+		value               & int               &                    & Rollenwert \\ \hline
+		id                  & int               &                    & Identifikator der Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Rolle löschen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine einzelne Rolle zu löschen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & der                & Rolle löschen \\ \hline
+		id                  & int               &                    & Identifikator der Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & string           &                 & Bei Erfolg: {\glqq Role successfully deleted\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Nutzerpasswort ändern}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Nutzerpasswort zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & cup                & Passwort ändern \\ \hline
+		id                  & int               &                    & Identifikator des Nutzers \\ \hline
+		pwd1                & string            &                    & Inhalt Passwortbox 1 \\ \hline
+		pwd2                & string            &                    & Inhalt Passwortbox 2 \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & string           &                 & Bei Erfolg: {\glqq Successfully updated Password!\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Nutzeraktivierung umschalten}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um das Nutzerpasswort eines Nutzers neu zu setzen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & teu                & Nutzeraktivierung umschalten \\ \hline
+		id                  & int               &                    & Identifikator des Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & string           &                 & Bei Erfolg: {\glqq Successfully updated User!\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Nutzerpasswort Reset via Mail}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine ein Nutzerpasswort zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & rup                & Nutzerpasswort Reset \\ \hline
+		id                  & int               &                    & Identifikator des Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Bei Erfolg: Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Neuen Rang hinzufügen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um einen neuen Rang hinzuzufügen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & adr                & Rang anlegen \\ \hline
+		name                & string            &                    & Rangname \\ \hline
+		value               & int               &                    & Rangwert \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & bool             &                 & Bei Erfolg: {\glqq true\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Rang löschen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um einen Rang zu löschen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & dra                & Rang löschen \\ \hline
+		id                  & int               &                    & Identifikator des Rangs \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & bool             &                 & Bei Erfolg: {\glqq Rank successfully deleted\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Bestehenden Rang ändern}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um einen bestehenden Rang zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & era                & Rang ändern \\ \hline
+		id                  & int               &                    & Identifikator des Rangs \\ \hline
+		name                & string            &                    & Rangname \\ \hline
+		value               & int               &                    & Rangwert \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Bei Erfolg: Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Abrufen von Statistiken}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um Statistiken abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gsd                & Statistiken anfordern \\ \hline
+		data                & array             &                    & Strukturierter Request \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		data               & Array             &                 & Liste der angeforderten Daten \\ \hline
+		src                & string            &                 & Quelle der Daten \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		type               & string            &                 & Zeiteinheit (D:Tage, W:Wochen, M:Monate, Y:Jahre) \\ \hline
+		Amount             & int               &                 & Anzahl an Einheiten \\ \hline
+		ID                 & int               &                 & Identifikator \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Erfolgreich wenn Wert {\glqq 0\grqq} ist \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & array            &                 & Strukturiertes Ergebnis \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		type               & string            &                 & Zeiteinheit (D:Tage, W:Wochen, M:Monate, Y:Jahre) \\ \hline
+		Amount             & int               &                 & Anzahl an Einheiten \\ \hline
+		ID                 & int               &                 & Identifikator \\ \hline
+		data               & array             &                 & Eintrag entsprechend Doku zu Chart.js \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Abfrage aller Rollennamen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste aller Rollennamen abzurufen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gar                & Rollennamen abfragen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Bei Erfolg: Leeres Array \\ \hline
+		data                & array            &                 & Liste mit allen Rollennamen \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Abfrage aller Rangnamen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste aller Rangnamen abzurufen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & grn                & Rangnamen abfragen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Bei Erfolg: Leeres Array \\ \hline
+		data                & array            &                 & Liste mit allen Rangnamen \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Anfordern Captcha-Bild}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Base64 encodiertes Captcha-Bild anzufordern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & cpa                & Captcha-Bild anfordern \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Bei Erfolg: Leeres Array \\ \hline
+		data                & string           &                 & Base64 codiertes Captcha-JPEG \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Kontaktnachricht senden}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Kontaktnachricht zu versenden.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & cmg                & Captcha-Bild anfordern \\ \hline
+		cap                 & string            &                    & Nutzereingabe des Captchas \\ \hline
+		title               & string            &                    & Betreff der Nachricht \\ \hline
+		msg                 & string            &                    & Nachricht \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Bei Erfolg: Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Liste mit Modulen ohne Rangnamenspezifikation}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste von Modulen zu bekommen, welche keinen spezialisierten Namen eines Ranges haben.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & rns                & Modul-Liste anfordern \\ \hline
+		id                  & int               &                    & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Liste der Apis \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{payload}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		name               & string            &                 & Name des Moduls \\ \hline
+		id                 & int               &                 & Identifikator des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Liste aller modulbasierten Rangnamen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste mit modulbasierten Namen eines Ranges ab zu fragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & rna                & Modul-Liste anfordern \\ \hline
+		id                  & int               &                    & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Liste der Apis \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{payload}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		id                      &                   &                 & Identifikator des modulbasierten Rangnamens \\ \hline
+		rankname                & string            &                 & Name des Moduls \\ \hline
+		modulename              & string            &                 & Name des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Modulbasierten Rangnamen hinzufügen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste mit modulbasierten Namen eines Ranges ab zu fragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & imr                & Modul-Liste anfordern \\ \hline
+		rid                 & int               &                    & Identifikator eines Ranges \\ \hline
+		aid                 & int               &                    & Identifikator eines Moduls \\ \hline
+		name                & string            &                    & modulbasierter Name des Ranges  \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Modulbasierten Rangnamen löschen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste mit modulbasierten Namen eines Ranges ab zu fragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & imr                & Modul-Liste anfordern \\ \hline
+		id                  & int               &                    & Identifikator eines modulbasierten Ranganmens \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Abfrage aller Daten einer API}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um alle Daten einer API abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gap                & API-Daten anfordern \\ \hline
+		id                  & int               &                    & Identifikator einer API \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Daten der API \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{payload}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		id                      &                   &                 & Identifikator der API \\ \hline
+		name                    & string            &                 & Name der API \\ \hline
+		url                     & string            &                 & Reverse-API-URL der API \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Speichert Daten einer API}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um alle Daten einer API abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & sap                & API-Daten speichern \\ \hline
+		id                  & int               &                    & Identifikator einer API \\ \hline
+		name                & string            &                    & Name einer API \\ \hline
+		url                 & string            &                    & Url der Reverse-API des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Modulbasierte Rechte abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um Module abzufragen, für die der Nutzer rechte besitzt.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gmr                & API-Daten speichern \\ \hline
+		id                  & int               &                    & Identifikator eines Nutzers\\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Daten der API \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{payload}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		id                      & int               &                 & Identifikator der Berechtigung \\ \hline
+		api                     & string            &                 & Name der API \\ \hline
+		name                    & string            &                 & Name der Rolle \\ \hline
+		apiid                   & int               &                 & Identifikator eines Moduls\\ \hline
+		enabled                 & boolean           &                 & Freischaltungsstatus auf Modul\\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Name und ID aller APIs abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um Module abzufragen, für die der Nutzer rechte besitzt.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gam                & API-Daten speichern \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Daten der API \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{payload}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		id                      & int               &                 & Identifikator der API \\ \hline
+		name                    & string            &                 & Name der API \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Alle erlaubten Rollen abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt alle Rollen die der aktuelle Benutzer vergeben darf ab zu fragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & sar                & API-Daten speichern \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Daten der API \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{payload}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		id                      & int               &                 & Identifikator der Rolle \\ \hline
+		name                    & string            &                 & Name der Rolle \\ \hline
+		value                   & int               &                 & Wert der Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Modulbasierte Rolle speichern}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um Rechte für ein Modul der Datenbank hinzuzufügen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & smr                & Modul-Rolle speichern \\ \hline
+		module              & int               &                    & Identifikator eines Moduls \\ \hline
+		role                & int               &                    & Identifikator einer Rolle \\ \hline
+		user                & int               &                    & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Modulbasierte Rolle löschen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um Rechte für ein Modul der Datenbank hinzuzufügen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & drm                & Modul-Rolle löschen \\ \hline
+		id                  & int               &                    & Identifikator einer Berechtigung \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Mailvalidierungsstatus setzen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Validierung einer Mailadresse manuell zu setzen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & smv                & Mailvalidierungsstatus setzen \\ \hline
+		name                & string            &                    & Nutzername \\ \hline
+		state               & bool              &                    & Status der Validierung der Mailadresse \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & array            &                 & Leeres Array \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Modulberechtigungen aktualisieren}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um Rechte für ein Modul in der Datenbank zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & umr                & Modulberechtigungen aktualisieren \\ \hline
+		roleid              & int               &                    & Identifikator eines Nutzers \\ \hline
+		rightid             & int               &                    & Identifikator einer Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & string            &                 & Link zum Neuladen der Seite \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Deaktivierungsstatus für Modulrechte eines Nutzer setzen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um den Deaktivierungsstatus eines Nutzers für ein Modul in der Datenbank zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & dsr                & Ändern Deaktivierungsstatus eines Nutzers für ein Modul \\ \hline
+		state               & bool              &                    & Status der Deaktivierung \\ \hline
+		rightid             & int               &                    & Identifikator eines Rechtes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & string           &                 & Link zum Neuladen der Seite \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Nutzer ohne Rechte für Modul suchen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um Nutzer ohne Rechte für ein Modul ab zu fragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gum                & Liste von Nutzern abfragen \\ \hline
+		module              & int               &                    & Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & string           &                 & Link zum Neuladen der Seite \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{payload}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		id                      & int               &                 & Identifikator der Rolle \\ \hline
+		name                    & string            &                 & Name des Nutzers \\ \hline
+		firstname               & string            &                 & Vorname \\ \hline
+		lastname                & string            &                 & Nachname \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Neues Modul anlegen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein neues Modul an zu legen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & cna                & Modul anlegen \\ \hline
+		name                & string            &                    & Name des neuen Moduls \\ \hline
+		url					& string			&					 & Url der Reverse-Api des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & string           &                 & generierter Authentifizierungstoken \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Existenz Mailadresse prüfen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein neues Modul an zu legen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & cma                & Mailadresse prüfen \\ \hline
+		email               & string            &                    & Mailadresse \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		success             & bool             &                 & Erfolgreich wenn Wert {\glqq true\grqq} ist \\ \hline
+		payload             & string           &                 & Wahr, wenn Mailadresse bereits verwendet wird \\ \hline
+	\end{tabular}
+\end{table}

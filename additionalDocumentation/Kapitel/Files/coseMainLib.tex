@@ -1,0 +1,198 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen, welche an diversen stellen im JavaScript dieser Seite verwendet werden.
+Es wird auch die zum Bereitstellen von Tooltipps benötigten Befehle ausgeführt:
+\begin{lstlisting}[language=JavaScript]
+$(document).ready(function () {
+	$('[data-toggle="tooltip"]').tooltip();
+});
+\end{lstlisting}
+\subsection{Funktionen}
+\subsubsection{AddNewRole}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion sendet eine API-Anfrage zum hinzufügen einer neuen Rolle. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{sendApiRequest}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		json   & Daten der Anfrage (JSON-Format) \\ \hline
+		reload & Legt fest, ob aktuelle Seite nach erfolgreicher Anfrage neu geladen werden soll \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion führt eine Anfrage mit den gegebenen Daten aus und lädt, wenn gewünscht, die Seite neu.
+\subsubsection{openEditRoleModal}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name  & Rollenname \\ \hline
+		value & Rollenwert \\ \hline
+		id    & Identifikator der Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion öffnet das Modal zum bearbeiten einer Rolle.
+\subsubsection{saveEditRoleModal}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion speichert die geänderten Werte einer Rolle. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{deleteRole}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id & Identifikator einer Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht eine Rolle. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{resetPasswordModalShow}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		username & Nutzername \\ \hline
+		id       & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion öffnet ein Modal um das Passwort des ausgewählten Nutzers zu ändern. 
+\subsubsection{resetPasswordModalSave}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion speichert das geänderte Passwort eines ausgewählten Nutzers. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+\subsubsection{enableDisableUser}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion aktiviert oder deaktiviert einen Nutzer (je nach aktuellem Status der Aktivierung). Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+\subsubsection{sendPasswordResetMail}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion sendet dem ausgewählten Nutzer eine Mail zum zurücksetzen des Passwortes.
+\subsubsection{AddNewRank}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion fügt dem System einen neuen Rang hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{deleteRank}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht den gegebenen Rang. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{openEditRankModal}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name  & Rangname \\ \hline
+		value & Rangwert \\ \hline
+		id    & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion öffnet das Modal zum bearbeiten eines Ranges.
+\subsubsection{saveEditRankModal}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion speichert die geänderten Informationen eines Ranges. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{loadCaptchaContact}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion lädt einen Captcha-Code für das Kontaktformular. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{submitContact}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion sendet eine API-Anfrage zum versenden einer Kontaktnachricht an die Mitarbeiter des Projekts.
+\subsubsection{setErrorOnInputContact}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		elementid & Identifikator des HTML-Elementes\\ \hline
+		state & Status der gesetzt werden soll\\ \hline
+		tootip & Tooltipp der angezeigt werden soll\\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion setzt die Darstellung eines Fehler-Status.
+\subsubsection{getCookie}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name & Name eines Cookies \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fragt den Wert eines Cookies ab.
+\subsubsection{testCookie}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name & Name eines Cookies \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob ein bestimmter Cookie gesetzt ist.
+\subsubsection{setCookie}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name   & Name des Cookies \\ \hline
+		value  & Wert beziehungsweise Inhalt des Cookies \\ \hline
+		exdays & Ablaufdatum \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion setzt einen Cookie.
+\subsubsection{deleteCookie}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name & Name eines Cookies \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht einen gesetzten Cookie.

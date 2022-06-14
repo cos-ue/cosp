@@ -1,0 +1,360 @@
+\begin{usecase}
+
+\addtitle{Rolle eines Nutzers ändern} 
+
+%Primary Actor: Calls on the system to deliver its services.
+\addfield{Benutzer:}{Mitarbeiter, Administratoren}
+\addfield{Endbenutzergruppen:}{}
+
+%Preconditions: What must be true on start and worth telling the reader?
+\addfield{Vorbedingungen:}{{\glqq Nutzerverwaltung\grqq} aufrufen}
+%when multiple
+%\additemizedfield{Preconditions:}{} 
+
+%Main Success Scenario: A typical, unconditional happy path scenario of success.
+\addscenario{Szenario:}{
+	\checkeditem {\glqq Rolen\grqq}-Menu aufklappen
+	\checkeditem Rolle auswählen
+}
+
+%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Passwort ändern} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Mitarbeiter, Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Nutzerverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem {\glqq Passwort ändern\grqq}-Button betätigen
+		\checkeditem neues Passwort eingeben
+		\checkeditem neues Passwort wiederholen
+		\checkeditem {\glqq Ändern\grqq}-Button betätigen
+		\checkeditem {\glqq Abmelden\grqq}-Button betätigen
+		\checkeditem Login mit neuem Passwort auf entsprechenden User
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[3.a] neues Passwort falsch wiederholen 
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Passwort ändern per Mail} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Mitarbeiter, Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Nutzerverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem {\glqq Passwort ändern per Mail\grqq}-Button betätigen
+		\checkeditem Link in der Mail folgen
+		\checkeditem neues Passwort eingeben
+		\checkeditem neues Passwort wiederholen
+		\checkeditem {\glqq Ändern\grqq}-Button betätigen
+		\checkeditem Login mit neuem Passwort auf entsprechenden User
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[4.a] neues Passwort falsch wiederholen 
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Nutzer aktivieren} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Mitarbeiter, Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Nutzerverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Bei nicht aktiviertem Nutzer {\glqq Enable\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[1.a] Bei aktiviertem Nutzer {\glqq Disable\grqq}-Button betätigen
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	\addtitle{Nutzer anlegen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Mitarbeiter, Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Nutzer anlegen\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem {\glqq Registrieren\grqq}-Button betätigen
+		\checkeditem Nutzername eingeben (nicht vorhanden)
+		\checkeditem E-Mail-Adresse eingeben
+		\checkeditem Passwort eingeben
+		\checkeditem Passwort wiederholt eingeben
+		\checkeditem {\glqq Registrieren\grqq}-Button betätigen
+	}
+	
+	%Extensions: Alternate scenarios of success or failure.
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] Vorhandenen Nutzernamen eingeben
+		\checkeditem[2.b] {\glqq Anmelden\grqq}-Button betätigen
+		\checkeditem[3.a] Zusätzliche Informationen Eingeben
+		\begin{enumerate}
+			\checkeditem Vorname oder Nachname eingeben
+			\checkeditem E-Mail-Adresse eingeben
+		\end{enumerate}
+		\checkeditem[3.b] Zusätzliche Informationen Eingeben
+		\begin{enumerate}
+			\checkeditem Vorname und Nachname eingeben
+			\checkeditem E-Mail-Adresse eingeben
+		\end{enumerate}
+		\checkeditem[5.a] Anderes Passwort als Wiederholung eingeben
+	}
+	
+	
+	%Miscellaneous: Such as open issues/questions
+	%\addfield{Open Issues:}{}
+	
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Rolle anlegen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Rollenverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem {\glqq Neu\grqq}-Button betätigen
+		\checkeditem Rollenname eingeben
+		\checkeditem Rollenwert eingeben
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] Vorhandenen Rollenname vergeben
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Rolle löschen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Rollenverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Bei hinzugefügter Rolle {\glqq Löschen\grqq}-Button betätigen
+		\checkeditem {\glqq OK\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] {\glqq Abbrechen\grqq}-Button betätigen
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Rolle ändern} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Rollenverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Bei hinzugefügter Rolle {\glqq Bearbeiten\grqq}-Button betätigen
+		\checkeditem Name ändern
+		\checkeditem {\glqq Speichern\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] Rollenwert ändern
+		\checkeditem[2.b] Name und Rollenwert ändern
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Rang anlegen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Rangverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem {\glqq Rang anlegen\grqq}-Button betätigen
+		\checkeditem Rangname eingeben
+		\checkeditem Rangwert eingeben
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] Vorhandenen Rangname vergeben
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Rang löschen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Rangverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Bei hinzugefügtem Rang {\glqq Löschen\grqq}-Button betätigen
+		\checkeditem {\glqq OK\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] {\glqq Abbrechen\grqq}-Button betätigen
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Rang ändern} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Rangverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Bei hinzugefügtem Rang {\glqq Bearbeiten\grqq}-Button betätigen
+		\checkeditem Name ändern
+		\checkeditem {\glqq Speichern\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] Rangwert ändern
+		\checkeditem[2.b] Name und Rangwert ändern
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Modulbasierte Rangnamen hinzufügen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Rangverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Bei Rang {\glqq Modulbasierte Namen\grqq}-Button betätigen
+		\checkeditem Modul aussuchen und Namen eingeben
+		\checkeditem {\glqq Speichern\grqq}-Button betätigen
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Modulbasierte Rangnamen löschen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Rangverwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Bei Rang {\glqq Modulbasierte Namen\grqq}-Button betätigen
+		\checkeditem Bei Namen {\glqq Löschen\grqq}-Button betätigen
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}

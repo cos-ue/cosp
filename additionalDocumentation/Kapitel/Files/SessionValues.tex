@@ -1,0 +1,116 @@
+\subsection{Allgemeines} Diese Datei ermöglicht es, Session-Daten innerhalb einer Datenbank zu speichern und initialisiert die Session.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Allgemeines}
+Der Sessionstart erfolgt mittels nachfolgendem Code:
+\begin{lstlisting}[language=php]
+session_set_save_handler('ses_open', 'ses_close', 'ses_read', 'ses_write', 'ses_destroy', 'ses_gc');
+register_shutdown_function('session_write_close');
+session_start();
+\end{lstlisting}
+Desweiteren wird auch die Variable \$LOGIN gesetzt:
+\begin{lstlisting}[language=php]
+$LOGIN = false;
+if (isset($_SESSION)) {
+	if (isset($_SESSION['name'])) {
+		$LOGIN = true;
+	}
+}
+\end{lstlisting}
+\subsection{Besonderheiten}
+\newpage
+\subsection{Funktionen}
+\subsubsection{ses\_open}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$path & irgendein Pfad (wird nicht genutzt, aber benötigt) \\ \hline
+		\$name & Irgendein Name (wird nicht genutzt, aber benötigt) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion eröffnet eine Session und gibt stets {\glqq true\grqq} zurück.
+\subsubsection{ses\_close}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion schließt eine Session und gibt stets {\glqq true\grqq} zurück.
+\subsubsection{ses\_read}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$ses\_id & Identifikator einer Session \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion liest eine Session aus der Datenbank. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Sessiondaten
+\end{itemize}
+Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{ses\_write}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$ses\_id & Identifikator der Session \\ \hline
+		\$data    & Daten der Session \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion schreibt die Sessiondaten in die Datenbank. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Sessiondaten.
+\end{itemize}
+Der Rückgabewert ist stets {\glqq true\grqq}.
+\subsubsection{ses\_destroy}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$ses\_id & Identifikator der Session \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht die Sessiondaten aus der Datenbank. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Sessiondaten.
+\end{itemize}
+Der Rückgabewert ist stets {\glqq true\grqq}.
+\subsubsection{ses\_gc}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$life & Lebenszeit der Sessions in Sekunden \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht alle Sessiondaten aus der Datenbank, welche älter das jetzt minus die angegebenen Sekunden sind. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Sessiondaten.
+\end{itemize}
+Der Rückgabewert ist stets {\glqq true\grqq}.
+\subsubsection{checkLoginDeny}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$login & Status des Login eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion beendet die Ausführung des PHP, wenn der Loginstatus nicht korrekt gesetzt ist. Die Antwort wird als Boolean an den Aufrufer zurückgegeben.

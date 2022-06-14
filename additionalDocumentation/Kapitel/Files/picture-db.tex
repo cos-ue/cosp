@@ -1,0 +1,184 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen zum Zugriff auf die Tabelle mit Bildern.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc-db.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-db-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{insertPic}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$title       & Titel des Bildes \\ \hline
+		\$description & Beschreibung des Bildes \\ \hline
+		\$picurl      & Dateiname des Bildes \\ \hline
+		\$preview     & Base64 encodiertes Vorschaubild \\ \hline
+		\$token       & alphanumerischer Identifikator des Bildes \\ \hline
+		\$uid         & Identifikator des hochladenden Nutzers \\ \hline
+		\$aid         & Identifikator des hochladenden Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt ein neues Bild der Datenbank hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{deletePicture}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht ein Bild aus der Datenbank. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getPictureListDB}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$apptoken & Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller Bilder eines Moduls ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getSinglePictureFromDB}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$apptoken     & Identifikator eines Moduls \\ \hline
+		\$pictureToken & alphanumerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft alle Daten zu einem bestimmten Bild ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getPreviewPicture}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & alphanumerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft das Vorschaubild eines bestimmten Bildes ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getFullsizePicture}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & alphanumerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft die Daten zum Laden des Vollbildes eines bestimmten Bildes ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getPictureIdByToken}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & alphanumerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft den numerischen Identifikator eines bestimmten Bildes anhand des alphanumerischen Identifikator ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getPictureUploadingUserByToken}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & alphanumerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft den hochladenden Nutzer eines Bildes ab. Die Funktion nutzt folgende Quellen
+\begin{itemize}
+	\item Tabelle mit Bildern
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{updateMaterialByToken}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token       & alphanumerischer Identifikator eines Bildes \\ \hline
+		\$title       & Titel des Bildes \\ \hline
+		\$description & Beschreibung des Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion aktualisiert die Metadaten eines Bildes. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{updateDeletionStatePictureByToken}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$id    & numerischer Identifikator eines Bildes \\ \hline
+		\$state & Status der Freischaltung \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion setzt den Status der Freischaltung eines Bildes. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{updateMaterialSourceByToken}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token       & alphanumerischer Identifikator eines Bildes \\ \hline
+		\$source      & Quellenangabe des Bildes \\ \hline
+		\$sourceType  & Identifikator des Typs der Quelle des Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion aktualisiert die Metadaten zu Quellen eines Bildes. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.

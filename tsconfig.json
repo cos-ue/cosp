@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5"
+  },
+  "exclude": [
+    "tjs/node_modules",
+    "tjs/node_modules/**/*"
+  ],
+  "include": [
+    "tjs/*",
+    "tjs/declarations/**/*",
+    "tjs/declarations/*"
+  ]
+}

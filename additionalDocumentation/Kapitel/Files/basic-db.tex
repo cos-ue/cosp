@@ -1,0 +1,71 @@
+\subsection{Allgemeines} Diese Datei enthält alle grundlegenden Funktionen für den Datenbankzugriff.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{getPdo}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion instanziiert die PDO-Klasse mit allen notwendigen Informationen. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Konfiguration
+\end{itemize}
+Es findet bei dieser Funktion kein Abruf von Daten aus {\glqq COSP\grqq} statt. Es wird eine PDO-Instanz zurück gegeben.
+\subsubsection{ExecuteStatementWOR}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$prep\_stmt & Vorbereitete SQL-Abfrage \\ \hline
+		\$params     & Array mit Parametern der Abfrage \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$params}Das Array enthält Elemente mit folgenden Elementen:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		val & Wert des Parameters \\ \hline
+		typ & Typ des Parameters \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion dient dem ermitteln aller für die Anzeige des Persönlichen Bereiches benötigten Daten aus folgenden Quellen:
+Es findet bei dieser Funktion kein Abruf von Daten aus {\glqq COSP\grqq} statt. Es wird eine Antwort zurück gegeben.
+\paragraph{Vorgehensweise} Es werden die Parameter in die vorbereitete Abfrage in der Reihenfolge des Arrays eingebunden. Anschließend wird die Abfrage auf der Datenbank ausgeführt.
+\subsubsection{ExecuteStatementWOR}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$prep\_stmt  & Vorbereitete SQL-Abfrage \\ \hline
+		\$params      & Array mit Parametern der Abfrage \\ \hline
+		\$read        & Schaltet das Lesen von Daten ab \\ \hline
+		\$disableNull & Schaltet das setzten des Wertes {\glqq null\grqq} ab \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$params}Das Array enthält Elemente mit folgenden Elementen:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		val & Wert des Parameters \\ \hline
+		typ & Typ des Parameters \\ \hline
+		nam & Name des Parameters in der vorbereiteten Abfrage \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion dient dem ermitteln aller für die Anzeige des Persönlichen Bereiches benötigten Daten aus folgenden Quellen:
+Es findet bei dieser Funktion kein Abruf von Daten aus {\glqq COSP\grqq} statt. Es wird eine Antwort zurück gegeben.
+\paragraph{Vorgehensweise} Es werden die Parameter in die vorbereitete Abfrage in der Anhand der vergebenen Platzhalter eingebunden. Die Einbindung geschieht in der Reihenfolge der im Array enthaltenen Elemente. Anschließend wird die Abfrage auf der Datenbank ausgeführt. Sofern das Lesen aktiviert ist, werden die Ergebnisse als strukturiertes Array zurück gegeben. Bei Auftreten eines Fehlers ist dieser Rückgabewert.

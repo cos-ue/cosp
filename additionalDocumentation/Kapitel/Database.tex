@@ -1,0 +1,545 @@
+\chapter{Datenbank-Spezifikation}
+\section{Tabellen-Übersicht}
+\begin{longtable}[H]{|l|p{9cm}|}
+	\hline
+	\textbf{Api-Befehl} 	   & \textbf{Kurzbeschreibung}              \\ \hline
+	dload\_\_api-token         & Daten für Kommunikation mit Modulen    \\ \hline
+	dload\_\_module-rank       & Daten für modulbasierte Ränge          \\ \hline
+	dload\_\_pictures          & Daten zu hochgeladenen Bildern         \\ \hline
+	dload\_\_pictures-validate & Validierungsdaten zu Bildern           \\ \hline
+	dload\_\_point-origin      & Herkunft für Rang-Punkte               \\ \hline
+	dload\_\_ranks             & Verfügbar Ränge und Daten zu diesen    \\ \hline
+	dload\_\_ranksystem        & Rangpunkte der Nutzer und Herkunft     \\ \hline
+	dload\_\_rights-tools      & Tabelle für toolspezifische Rechte     \\ \hline
+	dload\_\_roles             & Daten für Rollen                       \\ \hline
+	dload\_\_session           & Sessiondaten der Nutzer                \\ \hline
+	dload\_\_source\_type      & Typen von Quellen                      \\ \hline
+	dload\_\_stories           & Daten von hochgeladenen Geschichten    \\ \hline
+	dload\_\_stories-validate  & Validierungsdaten von Geschichten      \\ \hline
+	dload\_\_user-login        & Nutzerdaten für Login                  \\ \hline
+	dload\_\_visitors          & Statistische Nutzungsdaten             \\ \hline
+	dload\_\_user\_requests    & Statistiken zur Nutzung des Kontaktformulars \\ \hline
+\end{longtable}
+\newpage
+\section{Erläuterung}
+\subsection{Abkürzungen}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Abkürzung} & \textbf{Bedeutung} \\ \hline
+		PRI & Primary Key \\ \hline
+		FOR & Foreign Key / Fremdschlüssel \\ \hline
+		UNI & Unique Key \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{Aufbau}
+In den folgenden Abschnitten wird zuerst etwas über die Verwendung der Tabelle gesagt. Anschließend ist noch der Aufbau detailliert geschildert. Das Feld {\glqq Null\grqq} besagt, ob dieser Wert in der Tabelle den Wert {\glqq null\grqq} annehmen darf. Im Feld {\glqq Key\grqq} ist zu sehen ob dieser Wert als Schlüssel verwendet wird. Sofern dies ein Fremdschlüssel ({\glqq FOR\grqq}) ist, ist in der nächsten Tabelle zu finden auf welches Feld welcher Tabelle dieser sich bezieht.
+\section{Tabellen}
+\subsection{dload\_\_api-token}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Daten zu verbundenen Modulen zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		token & varchar & NO &  & UNI & \\ \hline
+		name & mediumtext & NO &  &  & \\ \hline
+		apiuri & mediumtext & NO &  &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & numerischer Identifikator des Moduls \\ \hline
+		token & Eindeutiger alphanumerischer Identifikator des Moduls \\ \hline
+		name & Modulname \\ \hline
+		apiuri & URL der Reverse-API \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+In dieser Tabelle sind keine Fremdschlüssel vorhanden.
+\subsection{dload\_\_module-rank}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Daten zu Rangnamen zu speichern, welche auf ein Modul angepasst wurden.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		aid & int & NO &  & FOR & \\ \hline
+		rid & int & NO &  & FOR & \\ \hline
+		name & varchar & NO &  &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator des Modul basierten Rangnamens \\ \hline
+		aid & Identifikator eines Moduls \\ \hline
+		rid & Identifikator eines Ranges \\ \hline
+		name & Name des Ranges im Modul \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		aid & dload\_\_api-token.id \\ \hline
+		rid & dload\_\_ranks.id \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{dload\_\_pictures}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Daten zu hochgeladenen Bildern zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		token & varchar & NO &  & UNI & \\ \hline
+		title & mediumtext & NO &  &  & \\ \hline
+		description & longtext & YES & NULL &  & \\ \hline
+		picurl & mediumtext & NO &  &  & \\ \hline
+		preview & longtext & NO &  &  & \\ \hline
+		source & mediumtext & NO &  &  & \\ \hline
+		sourcetype & int & NO &  & FOR & \\ \hline
+		uid & int & NO &  & FOR & \\ \hline
+		aid & int & NO & 5 & FOR & \\ \hline
+		creationdate & timestamp & NO & current\_timestamp() &  & \\ \hline
+		deleted & tinyint & NO & 0 &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Eindeutiger Identifikator des Bildes \\ \hline
+		token & Eindeutiger String Identifikator des Bildes \\ \hline
+		title & Titel des Bildes \\ \hline
+		description & Beschreibung des Bildes \\ \hline
+		picurl & Dateiname des Bildes \\ \hline
+		preview & Vorschau des Bildes, base64 encodiert \\ \hline
+		source & Quellenangabe des Bildes \\ \hline
+		sourcetype & Typ der Quelle des Bildes \\ \hline
+		uid & Nutzerid des hochladenden \\ \hline
+		aid & Id des hochladenden Moduls \\ \hline
+		creationdate & Zeitstempel des Eintragens \\ \hline
+		deleted & Zustandsmarkierung {\glqq gelöscht\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		aid & dload\_\_api-token.id \\ \hline
+		uid & dload\_\_user-login.id \\ \hline
+		sourcetype & dload\_\_source\_type.id \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{dload\_\_pictures-validate}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Validierungen zu einem Bild zu speichern. Hierzu wird die ID des Bildes und die Nutzer-ID des validierenden Nutzers benötigt.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		picture-id & int & NO &  & FOR & \\ \hline
+		user-id & int & NO &  & FOR & \\ \hline
+		value & int & NO &  &  & \\ \hline
+		date & datetime & NO & current\_timestamp() &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator der Validierung \\ \hline
+		picture-id & Identifikator des validierten Bildes \\ \hline
+		user-id & Identifikator des validierenden Nutzers \\ \hline
+		value & Validierungswert, mit dem Nutzer validiert hat \\ \hline
+		date & Zeitstempel der Validierung \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		user-id & dload\_\_user-login.id \\ \hline
+		picture-id & dload\_\_pictures.id \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{dload\_\_point-origin}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um den Ursprung der Rangpunkte zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		name & mediumtext & NO &  &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator des Punkteursprungs \\ \hline
+		name & Bezeichnung des Punkteursprungs \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+In dieser Tabelle sind keine Fremdschlüssel vorhanden.
+\subsection{dload\_\_ranks}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Daten Rängen zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		value & int & NO & 50 &  & \\ \hline
+		name & mediumtext & NO &  &  & \\ \hline
+		icon & varchar & NO & '''newbie.svg''' &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung}\\ \hline
+		id & Identifikator des Ranges \\ \hline
+		value & Rangwert \\ \hline
+		name & Name des Ranges \\ \hline
+		icon & Icon des Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+In dieser Tabelle sind keine Fremdschlüssel vorhanden.
+\subsection{dload\_\_ranksystem}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle erhaltenen und vergebenen Punkten Nutzern zu zuordnen, um diese anschließend auf einen Rang abzubilden.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		uid & int & NO &  & FOR & \\ \hline
+		aid & int & NO &  & FOR & \\ \hline
+		value & int & NO &  &  & \\ \hline
+		date & timestamp & NO & current\_timestamp() &  & on update current\_timestamp()\\ \hline
+		oid & int & NO &  & FOR & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator des zugeschriebenen Punktes \\ \hline
+		uid & Nutzer-ID des zugeschriebenen Nutzers \\ \hline
+		aid & Identifikator des Ursprungsmoduls \\ \hline
+		value & Zugeschriebene Punkteanzahl \\ \hline
+		date & Zeitstempel des hinzufügens \\ \hline
+		oid & Grund der hinzugefügten Punkte \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		aid & dload\_\_api-token.id \\ \hline
+		uid & dload\_\_user-login.id \\ \hline
+		oid & dload\_\_point-origin.id \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{dload\_\_rights-tools}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um toolspezifische Rechte zu vergeben. Diese Tabelle wird aktuell nicht genutzt.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		uid & int & NO &  & FOR & \\ \hline
+		aid & int & NO &  & FOR & \\ \hline
+		role & int & NO &  & FOR & \\ \hline
+		disabled & tinyint & NO & 1 &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator der Rollenzuweisung \\ \hline
+		uid & Identifikator des Nutzers dem eine Rolle zugewiesen wird \\ \hline
+		aid & Modulidentifikator für welches Rolle zugewiesen wird \\ \hline
+		role & Identifikator der zugewiesenen Rolle \\ \hline
+		disabled & Deaktivierung des Users in Modul \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		aid & dload\_\_api-token.id \\ \hline
+		uid & dload\_\_user-login.id \\ \hline
+		role & dload\_\_roles.id \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{dload\_\_roles}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um Daten zu Rollen zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		value & int & NO & 0 &  & \\ \hline
+		name & varchar & NO &  & UNI & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator der Rolle \\ \hline
+		value & Wert der Rolle \\ \hline
+		name & Name der Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+In dieser Tabelle sind keine Fremdschlüssel vorhanden.
+\subsection{dload\_\_session}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um Daten zu Nutzersessions zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		ses\_id & varchar & NO &  & PRI & \\ \hline
+		ses\_time & int & NO &  &  & \\ \hline
+		ses\_value & varchar & NO &  &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+In dieser Tabelle sind keine Fremdschlüssel vorhanden.
+\subsection{dload\_\_stories}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Daten zu hochgeladenen Geschichten zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		name & mediumtext & NO &  &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung}\\ \hline
+		id   & Identifikator des Typs der Quelle \\ \hline
+		name & Name des Typs der Quelle \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+In dieser Tabelle sind keine Fremdschlüssel vorhanden.
+\subsection{dload\_\_stories}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Daten zu hochgeladenen Geschichten zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		user\_id & int & NO &  & FOR & \\ \hline
+		storie\_token & varchar & NO &  & UNI & \\ \hline
+		title & mediumtext & NO &  &  & \\ \hline
+		story & longtext & NO &  &  & \\ \hline
+		aid & int & NO &  & FOR & \\ \hline
+		approved & tinyint & NO & 0 &  & \\ \hline
+		date & datetime & NO & current\_timestamp() &  & \\ \hline
+		points\_received & tinyint & NO & 0 &  & \\ \hline
+		deleted & tinyint & NO & 0 &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung}\\ \hline
+		id & numerischer Identifikator der Geschichte \\ \hline
+		user\_id & ID des hochladenden Nutzers \\ \hline
+		storie\_token & alphanumerischer Identifikator der Geschichte \\ \hline
+		title & Titel der Geschichte \\ \hline
+		story & Inhalt der Geschichte \\ \hline
+		aid & numerischer Modulidentifikator des hochladenden Moduls \\ \hline
+		approved & Status der Freischaltung \\ \hline
+		date & Datum des Hochladens oder Änderns \\ \hline
+		points\_received & Status der Punktevergabe \\ \hline
+		deleted & Status, ob Objekt als gelöscht gilt \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		aid & dload\_\_api-token.id \\ \hline
+		user\_id & dload\_\_user-login.id \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{dload\_\_stories-validate}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Validerungsdaten zu hochgeladenen Bildern zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		sid & int & NO &  & FOR & \\ \hline
+		uid & int & NO &  & FOR & \\ \hline
+		value & int & NO &  &  & \\ \hline
+		date & datetime & NO & current\_timestamp() &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator der Validierung \\ \hline
+		sid & numerischer Identifikator der Geschichte \\ \hline
+		uid & Nutzeridentifikator des Validierenden \\ \hline
+		value & Wert der Validierung \\ \hline
+		date & Zeitstempel der Validierung \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		uid & dload\_\_user-login.id \\ \hline
+		sid & dload\_\_stories.id \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{dload\_\_user-login}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um alle Daten zu Nutzern zu speichern.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		name & varchar & NO &  & UNI & \\ \hline
+		password & longtext & NO &  &  & \\ \hline
+		firstname & mediumtext & YES & NULL &  & \\ \hline
+		lastname & mediumtext & YES & NULL &  & \\ \hline
+		email & mediumtext & NO &  &  & \\ \hline
+		enabled & tinyint & NO & 1 &  & \\ \hline
+		mailvalidated & tinyint & NO & 0 &  & \\ \hline
+		role & int & NO &  & FOR & \\ \hline
+		creationdate & datetime & NO & current\_timestamp() &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator des Nutzers \\ \hline
+		name & Nutzername \\ \hline
+		password & Hash des Passwortes \\ \hline
+		firstname & Vorname des Nutzers \\ \hline
+		lastname & Nachname des Nutzers \\ \hline
+		email & E-Mailadresse des Nutzers \\ \hline
+		enabled & Status der Freischaltung \\ \hline
+		mailvalidated & Status der E-Mail-Validierung \\ \hline
+		role & Rollenidentifikator \\ \hline
+		creationdate & Zeitstempel des Anlegens des Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		role & dload\_\_roles.id \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{dload\_\_visitors}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um statistische Nutzungsdaten zur Plattform zu sammeln.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		ip & varchar & NO &  &  & \\ \hline
+		date & timestamp & NO & current\_timestamp() &  & \\ \hline
+		type & varchar & NO &  &  & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator des Eintrags \\ \hline
+		ip & IP-Adresse des Aufrufers \\ \hline
+		date & Zeitstempel des Aufrufs \\ \hline
+		type & Login-Typ des Aufrufs (Gast oder Nutzer) \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+In dieser Tabelle sind keine Fremdschlüssel vorhanden.
+\subsection{dload\_\_user\_requests}
+\subsubsection{Verwendung} Diese Tabelle wird verwendet um statistische Nutzungsdaten des Kontaktformulars zu sammeln.
+\subsubsection{Inhalt}
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|c|c|p{3.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Datentyp} & \textbf{Null} & \textbf{Standardwert} & \textbf{Key}   & \textbf{Besonderheiten} \\ \hline
+		id & int & NO &  & PRI & auto\_increment \\ \hline
+		date & timestamp & NO & current\_timestamp() &  & \\ \hline
+		ip & varchar & NO &  &  & \\ \hline
+		module & int & YES & NULL & FOR & \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Beschreibung}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Beschreibung} \\ \hline
+		id & Identifikator des Eintrags \\ \hline
+		date & Zeitstempel der Nutzung des Kontaktformulars \\ \hline
+		ip & IP-Adresse des Nutzenden \\ \hline
+		module & Modul für welchen bei welchem das Formular genutzt wurde \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Fremdschlüssel}
+\begin{table}[H]
+	\begin{tabular}{|c|p{12.5cm}|}
+		\hline
+		\textbf{Feldname} & \textbf{Fremd-Feld} \\ \hline
+		module & dload\_\_api-token.id \\ \hline
+	\end{tabular}
+\end{table}

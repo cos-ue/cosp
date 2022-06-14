@@ -1,0 +1,31 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen zum Senden einer E-Mail.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\subsection{Funktionen}
+\subsubsection{sendMail}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$receiver        & E-Mailadresse des Empfängers \\ \hline
+		\$title           & Betreff der E-Mail \\ \hline
+		\$msg             & Inhalt der E-Mail \\ \hline
+		\$html\_flag      & Legt fest, ob E-Mail HTML Inhalt besitzt \\ \hline
+		\$reply           & Antwortadresse der E-Mail \\ \hline
+		\$additionalParam & Legt fest, ob zusätzliche Mail-Header aus der Konfigurationsdatei (siehe: \autoref{config:additional-mail-header}) verwendet werden sollen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion sendet eine E-Mail an die entsprechende Adresse.

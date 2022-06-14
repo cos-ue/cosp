@@ -1,0 +1,27 @@
+\subsection{Allgemeines} Diese Datei enthält alle grundlegenden Funktionen um statistische Daten ab zu rufen.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc-db.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-db-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\subsection{Funktionen}
+\subsubsection{ExecuteStatisticStatement}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$statement & Vorbereitetes Statement ohne Werte \\ \hline
+		\$amount    & Anzahl an Zeiteinheiten \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion führt das angegebene Statement mit dem angegebenen Parameter aus. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.

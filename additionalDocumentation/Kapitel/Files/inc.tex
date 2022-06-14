@@ -1,0 +1,42 @@
+\subsection{Allgemeines} Diese Datei Einbindungen aller benötigten Dateien für die Ausführung der Anwendung d.
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Einbindungen}
+\subsubsection{Grundlegendes}
+Zu Anfangs wird zunächst der HTTP-Content-Typ festgelegt:
+\begin{lstlisting}[language=php]
+header('Content-Type: text/html; charset=utf-8');
+\end{lstlisting}
+Nachfolgend zu sehender Code-Block bindet alle benötigten Dateien in korrekter Reihenfolge ein. Beim Einbinden neuer Dateien, sind diese stets an das Ende zu schreiben, außer die Dateien sind Umstrukturierungen bereits existenten Dateien.
+\begin{lstlisting}[language=php]
+require_once 'bin/config.php';
+require_once 'bin/MailTemplates.php';
+require_once 'bin/settings.php';
+require_once 'bin/database/inc-db.php';
+require_once 'bin/deletions.php';
+require_once 'bin/functionLib.php';
+require_once 'bin/authSystem.php';
+require_once 'bin/SessionValues.php';
+require_once 'bin/api-functions.php';
+require_once 'bin/uapi-functions.php';
+require_once 'bin/mapi-functions.php';
+require_once 'bin/mailer.php';
+require_once 'bin/statistic-calc.php';
+require_once 'bin/captcha.php';
+\end{lstlisting}
+Des weiteren wird hier die für den Nutzer sichtbare Fehlerausgabe anhand des Debug-Konfigurationsparameters festgelegt:
+\begin{lstlisting}[language=php]
+if (config::$DEBUG === true) {
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+}
+\end{lstlisting}
+\subsubsection{Besonderheit}
+Die Einbindungen sind immer vom Hauptordner aus zu erreichen und auch relativ zu diesem anzugeben.

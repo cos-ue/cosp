@@ -1,0 +1,10 @@
+\subsection{Allgemeines} Diese Datei ist der Endpunkt der Modul-API.
+Die Datei ist direkt durch den Nutzer aufrufbar. Sie setzt auch die entsprechende Konstante und bindet alle notwendigen Dateien ein:
+\begin{lstlisting}[language=php]
+define('NICE_PROJECT', true);
+require_once "bin/inc.php";
+\end{lstlisting}
+\subsection{Allgemeines}
+Diese Seite verteilt die API-Anfragen auf die verschiedenen Funktionen auf. Für eine Liste aller möglichen API-Befehle siehe \autoref{api}.
+\subsection{Besonderheiten}
+Diese Seite bietet keine Graphische Nutzeroberfläche an. Alle Antworten auf Anfragen sind im JSON-Format.

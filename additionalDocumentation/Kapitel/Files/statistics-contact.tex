@@ -1,0 +1,87 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen zum Zugriff auf die Tabelle mit statistischen Daten zur Nutzung der Kontaktformulare.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc-db.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-db-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+	if (!defined('NICE_PROJECT')) {
+		die('Permission denied.');
+	}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\subsection{Funktionen}
+\subsubsection{insertLogContactMail}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$ip   & IP-Adresse des Aufrufers \\ \hline
+		\$aid  & Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt einen statistischen Eintrag zum aktuellen Aufruf hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit statistischen Daten zur Kontaktformularnutzung
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getContactStatisticalDataLastWeeks}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$number & Anzahl an Wochen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft statistische Daten zur Nutzung des Kontaktformulars der angegebenen letzten Wochen ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getContactStatisticalDataLastMonth}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$number & Anzahl an Monaten \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft statistische Daten zur Nutzung des Kontaktformulars der angegebenen letzten Monate ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getContactStatisticalDataLastYear}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$number & Anzahl an Jahren \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft statistische Daten zur Nutzung des Kontaktformulars der angegebenen letzten Jahren ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getContactStatisticalDataLastDays}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$number & Anzahl an Tagen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft statistische Daten zur Nutzung des Kontaktformulars der angegebenen letzten Tage ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.

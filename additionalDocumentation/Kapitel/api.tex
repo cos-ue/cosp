@@ -1,0 +1,964 @@
+\chapter{API-Spezifikation}
+\section{Modul API-Spezifikation}\label{api}
+\subsection{Beschreibung}Diese API dient der Kommunikation zwischen der Module mit der zentralen Verwaltung der Citizien Science Plattform {\glqq COSP\grqq} ({\glqq Citizen Open Science Plattform\grqq}). Hier können Nutzerdaten, Geschichten und Bilder neu angelegt, geändert, abgefragt oder gelöscht werden. Die einzelnen Module, zum Beispiel das Modul {\glqq Kino Karte\grqq}, nutzen dieses Modul um den Zugang zu Inhalten für Nutzer an zu fragen, welche dann durch den Nutzer geladen werden. Des weiteren wird in {\glqq COSP\grqq} die komplette Nutzerverwaltung für alle angeschlossenen Module übernommen, somit braucht jedes Modul selbst keine komplexe und aufwendige Nutzerverwaltung implementiert zu haben. Diese API wird durch eine Token geschützt, welchen nur {\glqq COSP\grqq} und das anfragende Modul kennen.
+\subsection{Befehlsübersicht}
+\begin{longtable}[H]{|c|p{12cm}|}
+		\hline
+		\textbf{Api-Befehl} & \textbf{Kurzbeschreibung}              \\ \hline
+		rud                 & Nutzerdaten abfragen          \\ \hline
+		rrd                 & Rollendaten eines Nutzers abfragen            \\ \hline
+		arp                 & Rangpunkte hinzufügen \\ \hline
+		grp                 & Rangpunkte für Nutzer abfragen \\ \hline
+		gjp                 & Rangpunkte für Nutzer im letzten Jahr abfragen \\ \hline
+		grl                 & Rangliste für Modul abfragen \\ \hline
+		gau                 & Alle Nutzernamen abrufen \\ \hline
+		aud                 & Neuen Nutzer anlegen \\ \hline
+		pul                 & Bild Hochladen \\ \hline
+		gsc                 & Sicherheitscode für Bild anfragen \\ \hline
+		gpl                 & Bilderliste eines Moduls anfragen \\ \hline
+		grt                 & Rangtypen abfragen \\ \hline
+		aus                 & Nutzergeschichte Hochladen \\ \hline
+		gus                 & Nutzergeschichtenzugang eines Moduls abfragen (multiple Links)\\ \hline
+		gas                 & Nutzergeschichtenzugang eines Moduls abfragen (ein Link)\\ \hline
+		gsm                 & Einzelnen Bildzugang abfragen\\ \hline
+		ssm                 & Ändern der Metadaten eines Bildes \\ \hline
+		eus                 & Ändern einer Geschichte \\ \hline
+		rup                 & Reset Nutzerpasswort \\ \hline
+		dsp                 & Einzelbild löschen \\ \hline
+		gsl                 & Geschichtenliste zu Modul \\ \hline
+		dus                 & Nutzergschichte löschen \\ \hline
+		gst                 & Geschichtstitel aller Geschichten eines Moduls \\ \hline
+		asa                 & Nutzergeschichte freischalten \\ \hline
+		das                 & Nutzergeschichte sperren \\ \hline
+		scm                 & Kontaktnachricht senden \\ \hline
+		gca                 & Captcha Code anfordern \\ \hline
+		rst                 & Geschichte Wiederherstellen \\ \hline
+		fst                 & Geschichte final löschen \\ \hline
+		rpc                 & Bild Wiederherstellen \\ \hline
+		fpc                 & Bild final löschen \\ \hline
+		gts                 & Alle Typen von Quellen abfragen \\ \hline
+		cma					& Prüfe ob Mailadresse bereits bekannt \\ \hline
+\end{longtable}
+\newpage
+\subsection{Befehle}
+\subsubsection{Nutzerdaten abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Daten eines Nutzers abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & rud                & Abfrage Nutzerdaten \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername \\ \hline
+		ignore              & Boolean           &                    & Status des Ignorierens des Aktivierungstatus \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		existent            & int              &                 & Wenn Nutzer existent: {\glqq 1\grqq}\\ \hline
+		id                  & int              &                 & Identifikator des Nutzers in {\glqq COSP\grqq} \\ \hline
+		username            & string           &                 & Nutzername \\ \hline
+		password            & string           &                 & Passworthash \\ \hline
+		firstname           & string           &                 & Vorname \\ \hline
+		lastname            & string           &                 & Nachname \\ \hline
+		email               & string           &                 & E-Mailadresse \\ \hline
+		role                & array            &                 & Rollendaten \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{role}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		roleid             & int               &                 & Identifikator der Rolle in {\glqq COSP\grqq} \\ \hline
+		rolevalue          & int               &                 & Rollenwert \\ \hline
+		rolename           & string            &                 & Rollenname \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Nutzerrollendaten abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Rolle eines Nutzers abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & rrd                & Abfrage Nutzerrolle \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		username            & string           &                 & Nutzername \\ \hline
+		role                & array            &                 & Rollendaten \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{role}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		roleid             & int               &                 & Identifikator der Rolle in {\glqq COSP\grqq} \\ \hline
+		rolevalue          & int               &                 & Rollenwert \\ \hline
+		rolename           & string            &                 & Rollenname \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Rangpunkte hinzufügen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Rolle eines Nutzers abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & arp                & Rangpunkte hinzufügen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername \\ \hline
+		reason              & string            &                    & Grund der Punkte \\ \hline
+		points              & int               &                    & Punkteanzahl \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Rangpunkte für Nutzer abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Rangpunkte eines Nutzers abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & grp                & Rangpunkte für Nutzer abfragen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		points              & int              &                 & Anzahl der Rangpunkte des Nutzers \\ \hline
+		username            & string           &                 & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Rangpunkte des letzten Jahres für Nutzer abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Rangpunkte eines Nutzers innerhalb des letzten Jahres abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gjp                & Rangpunkte des letzten Jahres eines Nutzers abfragen\\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		points              & int              &                 & Anzahl der Rangpunkte des Nutzers \\ \hline
+		username            & string           &                 & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Rangliste für Modul abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Rangliste eines Moduls abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & grl                & Rangliste eines Moduls abfragen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		points              & array            &                 & Geordnete Rangliste \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{role}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		SUMTOTAL           & int               &                 & Summe aller Rangpunkt \\ \hline
+		SUMYEAR            & int               &                 & Summe aller Rangpunkt im letzten Jahr \\ \hline
+		name               & string            &                 & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Liste aller Nutzernamen abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um alle Nutzernamen abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gau                & Liste aller Nutzernamen abfragen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		usernames           & array            &                 & Liste der Nutzernamen \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Neuen Nutzer anlegen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um neuen Nutzer anzulegen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & aud                & Nutzer anlegen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername \\ \hline
+		password            & string            &                    & Passwort als Hash \\ \hline
+		email               & string            &                    & E-Mailadresse \\ \hline
+		firstname           & string            &                    & Vorname \\ \hline
+		lastname            & string            &                    & Nachname \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		Post                & array            &                 & Inhalt des Post-Requests \\ \hline
+		test                & bool             &                 & Bei Erfolg: {\glqq true\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Bild hochladen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Bild hochzuladen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & pul                & Bild hochladen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		title               & string            &                    & Titel des Bildes \\ \hline
+		desc                & string            &                    & Beschreibung des Bildes \\ \hline
+		username            & string            &                    & Nutzername des Hochladenden \\ \hline
+		source              & string            &                    & Quellenangabe (optional) \\ \hline
+		sourceid            & int               &                    & Identifikator des Typs der Quelle \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{Anmerkung} Das Bild an sich ist dem Postrequest als HTTP-Datei anzufügen. Es kann nicht BASE64-Codiert übertragen werden. Ein Beispiel des entsprechenden PHP-Codes um einen solchen Request auszuführen ist in Modul {\glqq Kino Karte\grqq} enthalten.
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		title               & string           &                 & Titel des Bildes \\ \hline
+		desc                & string           &                 & Beschreibung des Bildes \\ \hline
+		token               & string           &                 & Identifikator des Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Sicherheitscode für Bilderabruf anfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um einen Sicherheitscode des zum abrufen des Bildes abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gsc                & Sicherheitscode anfragen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		pictureToken        & string            &                    & Identifikator des Bildes \\ \hline
+		username            & string            &                    & Nutzername für den angefragt wird \\ \hline
+		rank-val            & int               &                    & Rangwert des Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		token               & string           &                 & Informationen für Abruf \\ \hline
+		seccode             & string           &                 & Sicherheitscode \\ \hline
+		time                & int              &                 & Zeitstempel \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Liste der Bilder eines Moduls abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste aller Bilder eines Moduls abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gpl                & Bilderliste Abfragen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername für den angefragt wird \\ \hline
+		rank-val            & int               &                    & Rangwert des Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		pics                & array            &                 & Liste der Bilder \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{pics}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		id                 & int               &                 & Identifikator des Bildes in {\glqq COSP\grqq} \\ \hline
+		identifier         & string            &                 & Globaler Identifikator des Bildes \\ \hline
+		token              & array             &                 & Sicherheitsinformationen zum abfragen \\ \hline
+		title              & string            &                 & Titel des Bildes \\ \hline
+		description        & string            &                 & Beschreibung des Bildes \\ \hline
+		username           & string            &                 & Nutzername des anfragenden Nutzers \\ \hline
+		validationValue    & int               &                 & Summer aller Validierungen des Bildes \\ \hline
+		valUsers           & array             &                 & Liste aller Nutzer, welches Bild validierten \\ \hline
+		deleted            & bool              &                 & Hat Wert {\glqq 1\grqq} wenn Bild als gelöscht markiert ist \\ \hline
+		sourcename         & string            &                 & Name des Typs der Quelle \\ \hline
+		source             & string            &                 & Quellenangabe \\ \hline
+		sourceid           & int               &                 & Identifikator des Typs der Quelle \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{token}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		token              & string            &                 & Informationen für Abruf \\ \hline
+		seccode            & string            &                 & Sicherheitscode \\ \hline
+		time               & int               &                 & Zeitstempel \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Alle Rangtypen abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste aller Rangtypen abzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & grt                & Rangtypen Abfragen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		ranktypes           & array            &                 & Liste Rangtypen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{ranktypes}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		value              & int               &                 & Rangwert \\ \hline
+		name               & string            &                 & Rangname \\ \hline
+		image              & string            &                 & Bild für Rang \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Neue Nutzergeschichte anlegen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine neue Nutzergeschichte anlegen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & aus                & Geschichte anlegen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		title               & string            &                    & Titel der Geschichte \\ \hline
+		story               & string            &                    & Inhalt der Geschichte \\ \hline
+		username            & string            &                    & Nutzername des Hochladenden \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & array            &                 & Aufgebaut wie Anfrage \\ \hline
+		token               & array            &                 & Identifikator der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Ladedaten für Nutzergeschichte anfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um für jede Nutzergeschichte des Moduls Ladedaten zu erhalten.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gus                & Ladedaten für mehrere Geschichten \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		rank-val            & int               &                    & Rangwert des Nutzers \\ \hline
+		username            & string            &                    & Nutzername für welchen Angefragt wird \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & array            &                 & Ergebnis der Anfrage \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		token              & string            &                 & Ladedaten \\ \hline
+		username           & string            &                 & Nutzername für welchen Angefragt wurde \\ \hline
+		validated          & bool              &                 & Validierungsstatus der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{token}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		token              & string            &                 & Informationen für Abruf \\ \hline
+		seccode            & string            &                 & Sicherheitscode \\ \hline
+		time               & int               &                 & Zeitstempel \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Ladedaten um alle Nutzergeschichte zuladen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Ladedaten zum Laden aller Geschichten auf einmal zu erhalten.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gas                & Ladedaten für alle Geschichten \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		rank-val            & int               &                    & Rangwert des Nutzers \\ \hline
+		username            & string            &                    & Nutzername für welchen Angefragt wird \\ \hline
+		unvalidated         & bool              &                    & Flag, der das Laden unvalidierter Geschichten erlaubt \\ \hline
+		nonapproved         & bool              &                    & Flag, der das Laden gesperrter Geschichten erlaubt \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & array            &                 & Ergebnis der Anfrage \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		token              & string            &                 & Informationen für Abruf \\ \hline
+		seccode            & string            &                 & Sicherheitscode \\ \hline
+		time               & int               &                 & Zeitstempel \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Ladedaten für Einzelbild}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Ladedaten für ein Einzelbild zu erhalten.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gsm                & Einzelbild laden \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		rank-val            & int               &                    & Rangwert des Nutzers \\ \hline
+		username            & string            &                    & Nutzername für welchen Angefragt wird \\ \hline
+		pictureToken        & string            &                    & Identifikator des Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		token               & array            &                 & Ergebnis der Anfrage \\ \hline
+		id                  & int              &                 & Identifikator des Bildes in {\glqq COSP\grqq} \\ \hline
+		title               & string           &                 & Titel des Bildes \\ \hline
+		description         & string           &                 & Beschreibung des Bildes \\ \hline
+		username            & string           &                 & Nutzername des Erstellers des Bildes\\ \hline
+		validationValue     & int              &                 & Summe der Validierungen \\ \hline
+		valUsers            & array            &                 & Liste der Validatoren \\ \hline
+		deleted             & int              &                 & Hat Wert {\glqq 1\grqq} wenn Bild als gelöscht markiert ist \\ \hline
+		sourcename          & string           &                 & Name des Typs der Quelle \\ \hline
+		source              & string           &                 & Quellenangabe \\ \hline
+		sourceid            & int              &                 & Identifikator des Typs der Quelle \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{token}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		token              & string            &                 & Informationen für Abruf \\ \hline
+		seccode            & string            &                 & Sicherheitscode \\ \hline
+		time               & int               &                 & Zeitstempel \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Metadaten eines Bildes ändern}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um die Metadaten für ein Einzelbild zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & ssm                & Bildmetadaten ändern \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		description         & string            &                    & Beschreibung des Bildes \\ \hline
+		title               & string            &                    & Titel des Bildes \\ \hline
+		pictureToken        & string            &                    & Identifikator des Bildes \\ \hline
+		source              & string            &                    & Quellenangabe (optional) \\ \hline
+		sourceid            & int               &                    & Identifikator des Typs der Quelle (optional) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Nutzergeschichte ändern}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Nutzergeschichte zu ändern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & eus                & Geschichte ändern \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		description         & string            &                    & Inhalt der Geschichte \\ \hline
+		story               & string            &                    & Titel der Geschichte \\ \hline
+		storytoken          & string            &                    & Identifikator der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Nutzerpasswortreset}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um das Passwort eines Nutzers zu resetten.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & rup                & Passwort Reset \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Bild löschen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Bild zu löschen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & dsp                & Bild löschen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		pictureToken        & string            &                    & Identifikator des Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Mehrere Geschichten mittels Liste abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste von Geschichten anzufragen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gsl                & Geschichten anfordern \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		tokenList           & array             &                    & Liste mit Identifikatoren von Geschichten \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & array            &                 & Strukturiertes Ergebnis \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		token              & string            &                 & Identifikator der Geschichte \\ \hline
+		story              & string            &                 & Inhalt der Geschichte \\ \hline
+		title              & string            &                 & Titel der Geschichte \\ \hline
+		name               & string            &                 & Nutzername des Erstellers \\ \hline
+		date               & datetime          &                 & Erstellungsdatum \\ \hline
+		validate           & bool              &                 & Validierungsstatus \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Geschichte löschen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Geschichte zu löschen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & dus                & Geschichte löschen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		story\_token        & string            &                    & Identifikator der Geschichten \\ \hline
+		admin               & bool              &                    & Wahr für Adminberechtigung \\ \hline
+		user                & string            &                    & Löschender Nutzer \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Titel aller Geschichten eines Moduls}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Liste aller Titel von Geschichten eines Moduls zu erhalten.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gst                & Geschichte löschen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & array            &                 & Ergebnisse \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Elemente mit Einträgen in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		token              & string            &                 & Identifikator der Geschichte \\ \hline
+		title              & string            &                 & Titel der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Geschichte freischalten}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Geschichte freizuschalten.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & asa                & Geschichte löschen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername des Freischaltenden \\ \hline
+		storie\_token       & string            &                    & Identifikator der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Geschichte sperren}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Geschichte zu sperren.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & das                & Geschichte löschen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzername des Freischaltenden \\ \hline
+		storie\_token       & string            &                    & Identifikator der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Kontaktnachricht senden}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Kontaktnachricht zu senden.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & scm                & Kontaktnachricht senden \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		username            & string            &                    & Nutzer für welchen Nachricht gesendet wird \\ \hline
+		title               & string            &                    & Betreff der Nachricht \\ \hline
+		msg                 & string            &                    & Inhalt der Nachricht \\ \hline
+		email               & string            &                    & Mailadresse für Reply-Header \\ \hline
+		receiver            & string            &                    & Mailadresse des Empfängers \\ \hline
+		ip					& string			&					 & IP-Adresse des Absendenden Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Captcha-Code anfordern}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um einen Captcha-Code anzufordern.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gca                & Captcha anfordern \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		special             & bool              &                    & Gibt an ob Sonderzeichen genutzt werden sollen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & array            &                 & Array mit Captcha Daten \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		captcha            & string            &                 & Base64 encodiertes Captcha JPEG \\ \hline
+		code               & string            &                 & Code welcher im Captcha vorhanden ist \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Wiederherstellen einer Geschichte}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Geschichte wiederherzustellen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & rst                & Geschichte wiederherstellen\\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		IDent               & string            &                    & Identifikator der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Finales Löschen einer Geschichte}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine Geschichte final zu löschen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & fst                & Geschichte final löschen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		IDent               & string            &                    & Identifikator der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Wiederherstellen eines Bildes}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Bild wiederherzustellen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & rpc                & Bild wiederherstellen\\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		IDent               & string            &                    & Identifikator des Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Finales Löschen eines Bildes}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Bild final zu löschen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & fpc                & Bild final löschen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		IDent               & string            &                    & Identifikator des Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Alle Typen von Quellen abfragen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Bild final zu löschen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gts                & Quellentypen abfragen \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & array            &                 & Strukturiertes Ergebnis \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		id                 & int               &                 & Identifikator des Typs einer Geschichte \\ \hline
+		name               & string            &                 & Name des Typs der Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Prüfe ob Mailadresse bekannt}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt die Existenz einer Mailadresse zu prüfen.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & cma                & Prüfe Bekanntheit Mailadresse \\ \hline
+		token               & string            &                    & Authorisierungstoken des Moduls \\ \hline
+		mail				& string            &                    & Mailadresse \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		code                & int              &                 & Bei Erfolg: {\glqq 0\grqq} \\ \hline
+		result              & string           &                 & Bei Erfolg: {\glqq ack\grqq} \\ \hline
+		data                & bool             &                 & Wahr, wenn Adresse Bekannt \\ \hline
+	\end{tabular}
+\end{table}

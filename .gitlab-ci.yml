@@ -1,0 +1,336 @@
+# This file is a template, and might need editing before it works on your project.
+# Full project: https://gitlab.com/pages/doxygen
+
+stages:
+  - loc
+  - build
+  - minify
+  - test
+  - latex
+  - docu
+  - release
+  - deploy
+
+loc:php:
+  stage: loc
+  image: php:latest
+  script:
+    - apt update
+    - apt install -y wget
+    - wget https://phar.phpunit.de/phploc.phar
+    - php phploc.phar --exclude vendor --exclude node_modules ./
+  only:
+    - devel
+    - master
+    - tags
+    - bugfix-release
+
+loc:js:
+  stage: loc
+  image: node:latest
+  script:
+    - npm install -g sloc
+    - sloc --details --format json --keys total,source,comment js/*.js
+  only:
+    - devel
+    - master
+    - tags
+    - bugfix-release
+
+loc:ts:
+  stage: loc
+  image: node:latest
+  script:
+    - npm install -g sloc
+    - sloc --details --format json --keys total,source,comment tjs/*.ts
+  only:
+    - devel
+    - master
+    - tags
+    - bugfix-release
+
+doku:php:
+  stage: docu
+  image: php:7.4.13
+  script:
+    - apt update
+    - apt install -y wget graphviz
+    - wget http://www.phpdoc.org/phpDocumentor.phar
+    - mkdir docs
+    - mkdir docs/api
+    - php phpDocumentor.phar --parseprivate --sourcecode -d . -t docs/api
+    - mkdir phpdoc
+    - mv docs/api/* phpdoc
+  artifacts:
+    expire_in: 2h
+    paths:
+      - phpdoc
+  only:
+    - devel
+    - tags
+
+doku:js:
+  stage: docu
+  image: node:latest
+  script:
+    - npm install -g jsdoc
+    - jsdoc js/*.js
+    - mkdir jsdoc
+    - mv out/* jsdoc/
+  artifacts:
+    expire_in: 2h
+    paths:
+      - jsdoc
+  only:
+    - devel
+    - tags
+
+doku:ts:
+  stage: docu
+  image: node:latest
+  script:
+    - npm install -g typedoc
+    - mkdir tsdoc
+    - typedoc --out tsdoc tjs/*.ts
+  artifacts:
+    expire_in: 2h
+    paths:
+      - tsdoc
+  only:
+    - devel
+    - tags
+
+build:compileTypeScript:
+  stage: build
+  image: node:latest
+  script:
+    - npm install -g typescript
+    - tsc
+  artifacts:
+    expire_in: 2h
+    paths:
+      - tjs/*.js
+      - tjs/*.js.map
+  only:
+    - /^dev/.*$/i
+    - devel
+    - master
+    - tags
+    - bugfix-release
+    - /^bugfix-rel/.*$/i
+
+build:cssAutoprefix:
+  stage: build
+  image: node:latest
+  script:
+    - npm install -g postcss-cli autoprefixer
+    - cd css/
+    - mkdir build
+    - npx postcss *.css --use autoprefixer -d ./build
+    - for i in *.css; do out="$(basename $i .css)" ; end=".dev.css" ; mv -v $i $out$end ; echo $i ; done;
+    - cd build
+    - for i in *.css; do out="$(basename $i .css)" ; end=".pre.css" ; mv -v $i ../$out$end ; echo $i ; done;
+    - cd ../
+    - rm -Rv build
+  artifacts:
+    expire_in: 2d
+    paths:
+      - css
+  only:
+    - /^dev/.*$/i
+    - devel
+    - master
+    - tags
+    - bugfix-release
+    - /^bugfix-rel/.*$/i
+
+minify:js:
+  stage: minify
+  image: node:latest
+  script:
+    - npm install -g uglify-js@3
+    - cd js/
+    - for i in *.js; do out="$(basename $i .js)" ; end=".min.js" ; uglifyjs --compress --mangle -c --source-map -o $out$end -- $i ; echo $i ; done;
+    - cd ../tjs
+    - for i in *.js; do out="$(basename $i .js)" ; end=".min.js" ; uglifyjs --compress --mangle -c --source-map -o $out$end -- $i ; echo $i ; done;
+  artifacts:
+    expire_in: 2d
+    paths:
+      - js
+      - tjs/*.min.js
+      - tjs/*.min.js.map
+  needs:
+    - build:compileTypeScript
+  only:
+    - /^dev/.*$/i
+    - devel
+    - master
+    - tags
+    - bugfix-release
+    - /^bugfix-rel/.*$/i
+
+minify:css:
+  stage: minify
+  image: node:latest
+  script:
+    - npm install -g uglifycss
+    - cd css/
+    - for i in *.pre.css; do out="$(basename $i .css)" ; end=".min.css" ; uglifycss $i --output $out$end ; echo $i ; done;
+  artifacts:
+    expire_in: 2d
+    paths:
+      - css
+  needs:
+    - build:cssAutoprefix
+  only:
+    - /^dev/.*$/i
+    - devel
+    - master
+    - tags
+    - bugfix-release
+    - /^bugfix-rel/.*$/i
+
+test:php:
+  stage: test
+  image: php:latest
+  script:
+    - find . -iname "*.php" -exec php -l {} \;
+  only:
+    - /^dev/.*$/i
+    - devel
+    - master
+    - tags
+    - bugfix-release
+    - /^bugfix-rel/.*$/i
+
+test:js:
+  stage: test
+  image: node:latest
+  script:
+    - npm -g install acorn
+    - find ./js -iname "*.js" -exec acorn --silent {} \;
+    - find ./tjs -iname "*.js" -exec acorn --silent {} \;
+  needs:
+    - build:compileTypeScript
+    - minify:js
+  only:
+    - /^dev/.*$/i
+    - devel
+    - master
+    - tags
+    - bugfix-release
+    - /^bugfix-rel/.*$/i
+
+latex:testcases:
+  stage: latex
+  image: blang/latex:ctanfull
+  script:
+    - cd testcases
+    - latexmk -pdf
+    - ls -ahl
+  artifacts:
+    expire_in: 2d
+    paths:
+      - testcases/*.pdf
+  only:
+    - /^dev/.*$/i
+    - devel
+    - master
+    - tags
+    - bugfix-release
+    - /^bugfix-rel/.*$/i
+
+latex:additionalDocumentation:
+  stage: latex
+  image: blang/latex:ctanfull
+  script:
+    - cd additionalDocumentation
+    - latexmk -pdf
+    - ls -ahl
+  artifacts:
+    expire_in: 2d
+    paths:
+      - additionalDocumentation/*.pdf
+  only:
+    - /^dev/.*$/i
+    - devel
+    - master
+    - tags
+    - bugfix-release
+    - /^bugfix-rel/.*$/i
+
+pages:
+  stage: deploy
+  image: debian:latest
+  script:
+    - mkdir public
+    - mkdir public/js
+    - mkdir public/php
+    - mkdir public/ts
+    - cp -v testcases/*.pdf public/testcases.pdf
+    - cp -v additionalDocumentation/*.pdf public/additionalDocumentation.pdf
+    - mv jsdoc/* public/js
+    - mv phpdoc/* public/php
+    - mv tsdoc/* public/ts
+    - cp docu.html public/index.html
+  needs:
+    - doku:js
+    - doku:php
+    - doku:ts
+    - latex:testcases
+    - latex:additionalDocumentation
+  artifacts:
+    expire_in: 2d
+    paths:
+      - public
+  only:
+    - devel
+
+release:complete:
+  stage: release
+  only:
+    - tags
+  script:
+    - apt update
+    - apt install -y zip unzip
+    - ls -ahl
+    - rm -Rv .git
+    - rm -Rv .gitignore
+    - rm -Rv .gitlab-ci.yml
+    - rm -Rv .htaccess
+    - rm -Rv testcases
+    - rm -Rv additionalDocumentation
+    - rm -v docu.html
+    - rm -Rv jsdoc
+    - rm -Rv phpdoc
+    - rm -Rv tsdoc
+    - cd css
+    - mkdir final
+    - mv -v *.pre.css final
+    - mv -v *.pre.min.css final
+    - mv -v *.dev.css final
+    - rm -v *.css
+    - cd final
+    - for i in *.pre.min.css; do out="$(basename $i .pre.min.css)" ; end=".min.css" ; mv -v $i ../$out$end ; echo $i ; done;
+    - for i in *.pre.css; do out="$(basename $i .pre.css)" ; end=".css" ; mv -v $i ../$out$end ; echo $i ; done;
+    - mv -v *.dev.css ../
+    - cd ../
+    - rm -Rv final
+    - cd ../
+    - zip -r $CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA.zip ./
+  needs:
+    - build:compileTypeScript
+    - build:cssAutoprefix
+    - minify:js
+    - minify:css
+    - test:php
+    - test:js
+    - doku:js
+    - doku:php
+    - doku:ts
+    - latex:additionalDocumentation
+    - latex:testcases
+  artifacts:
+    expire_in: 2w
+    paths:
+      - $CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA.zip

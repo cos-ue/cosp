@@ -1,0 +1,51 @@
+\begin{usecase}
+	
+	\addtitle{API-Anlegen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq API-anlegen\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Name eingeben
+		\checkeditem Reverse-API-URI eingeben (ausgedachte)
+		\checkeditem {\glqq Anlegen\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] Bestehenden Namen eingeben
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{API-löschen} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Administratoren}
+	\addfield{Endbenutzergruppen:}{}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq API-Verwaltung\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Bei neu hinzugefügter API {\glqq Löschen\grqq}-Button betätigen
+		\checkeditem {\glqq OK\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[2.a] {\glqq Abbrechen\grqq}-Button betätigen
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}

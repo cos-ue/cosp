@@ -1,0 +1,10 @@
+\subsection{Allgemeines} Diese Datei zeigt ein Formular zum ändern des Passwortes, der Nutzer muss angemeldet sein.
+Die Datei ist direkt durch den Nutzer aufrufbar. Sie setzt auch die entsprechende Konstante und bindet alle notwendigen Dateien ein:
+\begin{lstlisting}[language=php]
+define('NICE_PROJECT', true);
+require_once "bin/inc.php";
+\end{lstlisting}
+\subsection{Allgemeines}
+Auf dieser Seite kann ein angemeldeter Nutzer sein Passwort ändern.
+\subsection{Besonderheiten}
+Der Nutzer muss nicht sein altes Passwort wissen. Ein Link zum Aufruf der Seite wird an die Mailadresse des Nutzers versendet.

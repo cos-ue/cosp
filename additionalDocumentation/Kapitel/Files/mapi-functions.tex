@@ -1,0 +1,572 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen, welche durch die Management-API aufgerufen werden.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{changeRole}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		username & Nutzername \\ \hline
+		role     & Identifikator einer Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ändert die Rolle eines Nutzers. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateFalse}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array oder Zeichenkette als Nutzlast der Antwort \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erstellt eine generische Nachricht, welche einen nicht erfolgreichen API-Request signalisiert. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{addNewRole}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name  & Name der neuen Rolle \\ \hline
+		value & Wert der neuen Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt eine neue Rolle dem System hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rollen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateSuccessMAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array oder Zeichenkette als Nutzlast der Antwort \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erstellt eine generische Nachricht, welche einen erfolgreichen API-Request signalisiert. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{saveEditRoleMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id    & Identifikator einer Rolle \\ \hline
+		value & Wert der Rolle \\ \hline
+		name  & Name der Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion aktualisiert eine Rolle. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rollen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{deleteRoleMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$id & Identifikator einer Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht eine Rolle. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rollen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{changeUserPasswordMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id   & Identifikator eines Nutzers \\ \hline
+		pwd1 & Inhalt des Passwortfeldes 1 \\ \hline
+		pwd2 & Inhalt des Passwortfeldes 2 \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ändert das Passwort eines Nutzers. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{enableUserMAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$uid & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion schaltet einen Nutzer frei oder sperrt diesen (anhängig vom aktuellen Status). Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{resetUserPasswordMAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$uid & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion sendet eine Mail zum zurücksetzen des Passwortes. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{addNewRank}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		value & Wert eines Ranges \\ \hline
+		name  & Name eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt der Anwendung einen neuen Rang hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rängen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{deleteRankMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$id & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht einen Rang. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rängen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{saveEditRankMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id    & Identifikator eines Ranges \\ \hline
+		value & Wert des Ranges \\ \hline
+		name  & Name des Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt aktualisiert einen Rang. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rängen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getStatisticalDataAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		data & Daten zum Abfragen der Statistiken \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft statistische Daten für Chart.js ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit statistischen Nutzungsdaten
+	\item Tabelle mit Nutzerdaten
+	\item Tabelle mit Bildern
+	\item Tabelle mit Geschichten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getAllRoleNamesAPI}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller Rollennamen ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rollen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getAllRankNamesAPI}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller Rangnamen ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rängen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateCaptchaAPI}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion ruft generiert ein Captcha und sendet das Bild an das Frontend, der Inhalt des Captchas wird ind der Session-Variable des Servers gespeichert. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{sendContactMessage}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		cap   & Durch Nutzer eingegebenen Inhalt des Captchas \\ \hline
+		msg   & Inhalt der Nachricht \\ \hline
+		title & Betreff der Nachricht  \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion sendet eine Kontakt-E-Mail an eine in der Konfigurationsdatei (siehe \autoref{config:zentral-mail}) hinterlegten Mailadresse. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getUnusedApisForRank}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id    & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller Module ab, welche keinen modulbasierten Rangnamen eines konkreten Ranges haben. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getModuleRankNames}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id    & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller modulbasierten Namen eines Ranges ab. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{insertModuleBasedRankNameMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		rid    & Identifikator eines Ranges \\ \hline
+		aid    & Identifikator eines Moduls \\ \hline
+		name   & modulbasierter Name eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt einen neuen modulbasierten Rangnamen hinzu. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getAllApiData}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id     & Identifikator einer API \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft alle Daten der angegebenen API ab.
+\subsubsection{saveApiDataAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id     & Identifikator einer API \\ \hline
+		name   & Name einer API \\ \hline
+		url    & Reverse-API-URL einer API \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion speichert geänderte Daten eines Moduls.
+\subsubsection{getModulBasedRights}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id     & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft die Module ab, für welche der Nutzer Rechte hat.
+\subsubsection{getAllModules}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion ruft den Namen und die Id aller Module ab.
+\subsubsection{addModuleRoleMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		role     & Identifikator eines Rolle \\ \hline
+		user     & Identifikator eines Nutzers \\ \hline
+		module   & Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt einem Nutzer eine neue Modul-Rolle hinzu.
+\subsubsection{generateErrorMAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array oder Zeichenkette als Nutzlast der Antwort \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erstellt eine generische Nachricht, welche einen nicht erfolgreichen API-Request signalisiert. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{deleteModuleBasedRoleMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id     & Identifikator eines modulbasierten Rechtes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht ein modulbasiertes Recht.
+\subsubsection{setMailValidationValue}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name     & Nutzername \\ \hline
+		state    & Status der Mailvalidierung \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion setzt den Validierungsstatus einer Mailadresse.
+\subsubsection{updateModuleRightsMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		roleid   & Identifikator einer Rolle \\ \hline
+		rightid  & Identifikator eines modulbasierten Rechtes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion aktualisiert die modulbasierten Berechtigungen.
+\subsubsection{setDisableModuleRightStateMapi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		state    & Status der Deaktivierung \\ \hline
+		rightid  & Identifikator eines modulbasierten Rechtes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion aktualisiert den Deaktivierungsstatus eines Modulrechtes.
+\subsubsection{getUnsubscribedUserForModule}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		state    & Status der Deaktivierung \\ \hline
+		module   & Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller Benutzer ohne eine Berechtigung für das gegebene Modul ab.
+\subsubsection{addNewModuleApi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name    & Name des neuen Moduls \\ \hline
+		url     & Url der Reverse-Api des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt COSP ein neues Modul hinzu.
+\subsubsection{checkMailAddressExistentAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$json & Array mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		email    & Emailadresse \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft ob eine Mailadresse bereits verwendet wird.

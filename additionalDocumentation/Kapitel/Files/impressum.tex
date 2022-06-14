@@ -1,0 +1,10 @@
+\subsection{Allgemeines} Diese Datei zeigt das Impressum an.
+Die Datei ist direkt durch den Nutzer aufrufbar. Sie setzt auch die entsprechende Konstante und bindet alle notwendigen Dateien ein:
+\begin{lstlisting}[language=php]
+define('NICE_PROJECT', true);
+require_once "bin/inc.php";
+\end{lstlisting}
+\subsection{Allgemeines}
+Hier steht für jeden sichtbar das Impressum. Die Seite unterstützt keine Funktionen.
+\subsection{Besonderheiten}
+Die Seite ist im Debug-Modus nicht für alle Sichtbar. Es soll hier auch die Adresse, des Verantwortlichen mittels Konfigurationsdatei geändert werden können. Hierfür sind die Konfigurationsflags \autoref{config:impressum-name}, \autoref{config:impressum-street} und \autoref{config:impressum-city} gedacht.

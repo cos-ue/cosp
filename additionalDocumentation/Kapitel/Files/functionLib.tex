@@ -1,0 +1,477 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen welche an mehreren Stellen des Projektes verwendet werden.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{generateHeader}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$LOGIN      & Status des Logins \\ \hline
+		\$loginpage  & Gibt an, ob Aufrufer die Login-Seite ist \\ \hline
+		\$rightpages & Gibt an, ob Aufrufer die Datenschutz- oder Impressums-Seite ist \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion generiert die Navbar. Die Antwort wird direkt Ausgegeben.
+\subsubsection{dump}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$data  & Daten für var\_dump \\ \hline
+		\$level & Optionale Angabe des Debuglevels, wird mit Angabe aus Konfiguration verglichen , siehe \autoref{config:debug-level} \\ \hline
+		\$dark  & Gibt an, ob Dump für dunklen Hintergrund optimiert werden soll. \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion dient der Ausgabe von Ergebnissen von Funktionen zu Entwicklungszwecken. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Konfigurationsdatei
+\end{itemize}
+Die Antwort wird direkt Ausgegeben.
+\subsubsection{Redirect}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$url       & Leitet die Anfrage auf eine andere Seite weiter \\ \hline
+		\$permanent & Legt fest, ob Weiterleitung permanent ist. \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion leitet den Aufrufer auf eine andere Seite weiter und beendet die Ausführung des aktuellen PHP-Scriptes. Die Antwort wird direkt Ausgegeben.
+\subsubsection{generateStringHmac}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$string & zu sichernde Zeichenkette \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erzeugt einen HMAC zu einer gegebenen Zeichenkette mithilfe eines Geheimnisses (\autoref{config:hmac-secret}). Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Konfigurationsdatei
+\end{itemize}
+Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{generateValidatableDataMaterial}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$tokenstring & Zeichenkette mit allen benötigten Informationen \\ \hline
+		\$time        & Zeitstempel (optional) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erzeugt eine Array mit allen benötigten Daten um die daraus bestehende Anfrage zu validieren. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{checkValidatableMaterial}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$data & Array mit benötigten Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$data} Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		token   & gesicherte Zeichenkette \\ \hline
+		seccode & Sicherheitscode \\ \hline
+		time    & gesicherter Zeitstempel \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob eine abgesicherte Anfrage auch durch das System erstellt wurde. Auch eine Ablaufüberprüfung anhand des übermittelten Datums erfolgt. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateValidatableData}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username    & Nutzername \\ \hline
+		\$tokenstring & Zeichenkette mit Informationen (optional) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erzeugt eine überprüfbare Zeichenkette mit einem Nutzernamen. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateValidatableDataTimed}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username    & Nutzername \\ \hline
+		\$tokenstring & Zeichenkette mit Informationen (optional) \\ \hline
+		\$time        & Zeitstempel (optional) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erzeugt eine überprüfbare Zeichenkette mit einem Nutzernamen und einem prüfbaren Zeitstempel. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.\textbf{}
+\subsubsection{generateValidateableLink}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username    & Nutzername \\ \hline
+		\$targetside  & Ziel des Links auf aktueller Website \\ \hline
+		\$tokenstring & Zeichenkette mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erzeugt einen validierbaren Link. Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{generateValidateableLinkTimed}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username    & Nutzername \\ \hline
+		\$targetside  & Ziel des Links auf aktueller Website \\ \hline
+		\$tokenstring & Zeichenkette mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erzeugt einen validierbaren Link mit Ablaufdatum. Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{checkValidatableLink}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$data & Array mit benötigten Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$json}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		token    & gesicherte Zeichenkette \\ \hline
+		username & gesicherter Nutzername \\ \hline
+		seccode  & Sicherheitscode \\ \hline
+		time     & gesicherter Zeitstempel \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft die Daten eines gesicherten Links. Die Antwort wird als Boolean an den Aufrufer zurückgegeben.
+\subsubsection{generateRandomString}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$length  & Länge der durch Zufall generierten Zeichenkette \\ \hline
+		\$special & Schaltet Sonderzeichen frei \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erzeugt eine durch Zufall generierte Zeichenkette. Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{permissionDenied}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$string & Angabe eines Grundes (optional) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion verhindert eine weitere Ausführung des Codes und bricht die Ausführung ab. Es kann eine Begründung für den Abbruch der Ausführung angegeben werden. Die Antwort wird direkt Ausgegeben.
+\subsubsection{grantPermission}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$string & Zeichenkette mit Begründung (optional) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erlaubt einen Zugriff durch eine API und sendet den entsprechenden HTTP-Statuscode für Cross-Site XHR-Requests zurück. Die Antwort wird direkt Ausgegeben.
+\subsubsection{ServerError}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion gibt den entsprechenden HTTP-Statuscode zurück, wenn ein API-Request falsche Parameter nutzt. Die Antwort wird direkt Ausgegeben.
+\subsubsection{generateHeaderTags}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$additional & Optional ein zu bindende Daten \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$additional}Das Array enthält Einträge mit folgenden Elementen:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		type    & Typ der Datei ({\glqq link\grqq} für zum Beispiel CSS-Files oder {\glqq script\grqq} für zum Beispiel javaScript-Files ) \\ \hline
+		rel     & Gibt den Rel-Tag eines HTML-Link Elements an \\ \hline
+		href    & Gibt die Position der Datei an \\ \hline
+		hrefmin & Gibt die minimierte Datei an \\ \hline
+		typeval & Gibt den Typ der Datei an (zum Beispiel: {\glqq text/javascript\grqq}) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion dient der Generierung von HTML-Head Elementen und der zentralen Pflege der eingebundenen Dateien. Die Antwort wird direkt Ausgegeben.
+\paragraph{Besonderheiten} Die Einbindung zusätzlicher Dateien erfolgt in der im Array angegebenen Reihenfolge mittels:
+\begin{lstlisting}[language=php]
+foreach ($additional as $line) {
+	switch ($line['type']) {
+		case 'link':
+			if (isset($line['typeval']) === false || $line['typeval'] === "") {
+				echo '<link rel="' . $line['rel'] . '" href="' . $line['href'] . '" >';
+			} else {
+				echo '<link rel="' . $line['rel'] . '" type="' . $line['typeval'] . '" href="' . $line['href'] . '" >';
+			}
+			break;
+		case 'script':
+			echo '<script type="' . $line['typeval'] . '" src="' . $line['href'] . '" ></script>';
+			break;
+	}
+}
+\end{lstlisting}
+\subsubsection{checkRoleID}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$rid & Identifikator einer Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft die Existenz eines Identifikators einer Rolle. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rollen
+\end{itemize}
+Die Antwort wird als Boolean an den Aufrufer zurückgegeben.
+\subsubsection{checkApiTokenExists}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & alphanumerischer Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft die Existenz eines Moduls. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit API-Token
+\end{itemize}
+Die Antwort wird als Boolean an den Aufrufer zurückgegeben.
+\subsubsection{decode\_json}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$string & Eingabe des JSON als Zeichenkette \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion decodiert Daten im JSON-Format in PHP-Arrays.Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{checkMailAddress}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$email & Mailadresse als Zeichenkette \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob eine gegebene Zeichenkette eine E-Mailadresse ist. Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben (sofern es eine E-Mailadresse ist).
+\subsubsection{checkReasonExists}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$reason & Begründung für Rangpunkte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft ob eine Begründung für Rangpunkte bereits existiert.
+\begin{itemize}
+	\item Tabelle mit Begründungen für Rangpunkte.
+\end{itemize}
+Es wird eine Antwort an den Aufrufer zurückgegeben.
+\subsubsection{createThumbnail}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$picture & Pfad zu einem Bild \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erstellt aus einem Bild ein Base64-Codiertes Vorschaubild. Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{checkPermission}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$requiredPermission & benötigte Berechtigung \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob der aktuelle Benutzer die benötigte Berechtigung besitzt.
+\subsubsection{deletePictureReferences}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$picToken  & alphanumerischer Identifikator eines Bildes \\ \hline
+		\$overwrite & Überschreibt den Direkt-Löschen-Konfigurationsparameter (siehe \autoref{config:direct-delete}) des Zielmoduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht alle Referenzen auf ein Bild oder markiert diese als gelöscht in allen Modulen. 
+\subsubsection{restorePictureReferences}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$picToken & alphanumerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion stellt alle als gelöscht markierten Referenzen eines Bildes in allen Modulen wieder her.
+\subsubsection{ApiCall}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$params       & Array mit Aufrufparametern (Key-Value-Paare) \\ \hline
+		\$type         & Type des Aufrufs (im Allgemeinen dreistellige Zeichenkette) \\ \hline
+		\$token        & alphanumerischer Identifikationstoken der fremden API \\ \hline
+		\$url          & URI der fremden API \\ \hline
+		\$file\_upload & Schaltet den Upload von Daten frei \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft eine API eines Moduls auf und übergibt dieser eine Anfrage. Die Antwort der API wird im Allgemeinen ignoriert.
+\subsubsection{AktivationRemoteUser}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$uri            & URI der fremden API \\ \hline
+		\$token          & alphanumerischer Identifikator der fremden API \\ \hline
+		\$username       & Nutzername \\ \hline
+		\$AktivationSate & Status der Freischaltung des Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion schaltet einen Nutzer in einem Modul frei oder sperrt diesen.
+\subsubsection{hashString}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$string & Zeichenkette \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erstellt einen Hash einer Zeichenkette. Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{PasswordResetViaMail}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username & Nutzername \\ \hline
+		\$email    & E-Mailadresse \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion sendet einem Nutzer eine E-Mail zum zurücksetzen seines Passwortes.
+\subsubsection{checkRankID}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$rid & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob eine gegebener Identifikator eines Ranges existiert. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rängen
+\end{itemize}
+Es wird eine Antwort an den Aufrufer zurückgegeben.
+\subsubsection{deleteStoryReference}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$storyToken & alphanumerischer Identifikator einer Geschichte \\ \hline
+		\$overwrite  & Überschreibt den Direkt-Löschen-Konfigurationsparameter (siehe \autoref{config:direct-delete}) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht alle Referenzen einer Geschichte in allen Modulen oder markiert diese als gelöscht.
+\subsubsection{restoreStoryReference}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$storyToken & alphanumerischer Identifikator einer Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion stellt alle Referenzen einer Geschichte in allen Modulen wieder her.
+\subsubsection{isStaff}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$name & Nutzername des zu prüfenden Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob eine gegebener Nutzer Mitarbeiter ist. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Nutzerdaten
+	\item Tabelle mit Rollen
+\end{itemize}
+Der Rückgabewert ist ein Boolean.
+\subsubsection{checkModulModuleRights}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$requiredPermission & benötigte Berechtigung \\ \hline
+		\$return             & Legt fest ob ein Rückgabewert existiert \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob der aktuelle Benutzer die benötigte Berechtigung auf mindestens einem Modul besitzt.
+\subsubsection{countRightsOnModules}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$user & Nutzername (optional) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion zählt alle Module auf welchen der Benutzer mindestens Mitarbeiterrechte besitzt.
+\subsubsection{getUserIp}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion bestimmt die IP-Adresse des Aufrufenden Nutzers. Es findet bei dieser Funktion ein Abruf von Daten aus {\glqq COSP\grqq} statt. Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{checkMailAddressExistent}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$email & Mailadresse \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob eine Mailadresse bereits verwendet wird.

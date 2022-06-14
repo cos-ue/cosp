@@ -1,0 +1,125 @@
+\subsection{Allgemeines} Diese Datei enthält Funktionen, welche zur Darstellung statistischer Daten verwendet werden.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{colorCounter}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion gibt ein Array mit möglichen Farben für Graphen zurück. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{loginStatistics}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$Input & Eingabedaten als Array \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$Input}Das Array enthält Einträge mit folgenden Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		Amount & Anzahl an Zeiteinheiten \\ \hline
+		type   & Typ der Zeiteinheit \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erstellt ein Datenarray, welches zur Anzeige der Nutzungsstatistiken verwendet wird. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit statistischen Nutzungsdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{createGraph}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$data  & statistische Daten in Array-Form \\ \hline
+		\$color & Farbe \\ \hline
+		\$label & Name des Datensatzes \\ \hline
+		\$fill  & Gibt an, ob Graph gefüllt werden soll \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion generiert einen durch das Chart.js anzeigbaren Datensatz. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{fillUnknownData}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$statisticalData & Array mit statistischen Daten \\ \hline
+		\$periodeAmount   & Anzahl an Zeiteinheiten \\ \hline
+		\$type            & Typ der Zeiteinheit \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion füllt fehlende Einträge in den statistischen Daten mit dem Wert {\glqq 0\grqq} auf. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{NewUsersStatistics}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$Input & Eingabedaten als Array \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$Input}Das Array enthält Einträge mit folgenden Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		Amount & Anzahl an Zeiteinheiten \\ \hline
+		type   & Typ der Zeiteinheit \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erstellt ein Datenarray, welches zur Anzeige der Statistik zu neuen Nutzern verwendet wird. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getStatistics}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$Input  & Eingabedaten als Array \\ \hline
+		\$Source & Quelle der Statistischen Daten \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$Input}Das Array enthält Einträge mit folgenden Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		Amount & Anzahl an Zeiteinheiten \\ \hline
+		type   & Typ der Zeiteinheit \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erstellt ein Datenarray, welches zur Anzeige der Statistik zu neuen/geänderten Bildern oder Geschichten verwendet wird. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{correctData}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$inputArray  & Eingabedaten als Array \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion korrigiert fehlerhafte statistische Daten. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.

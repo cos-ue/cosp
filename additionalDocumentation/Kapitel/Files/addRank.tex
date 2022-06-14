@@ -1,0 +1,68 @@
+\lstset{
+	language=JavaScript,
+	extendedchars=true,
+	basicstyle= \small\ttfamily,
+	showstringspaces=true,
+	showspaces=false,
+	tabsize=2,
+	breaklines=true,
+	showtabs=false,
+	captionpos=b,
+	showlines=true,
+	xleftmargin=4.0ex,
+	extendedchars=true,
+	literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen die zusätzlich auf der Seite des Rangmanagements benötigt werden.
+Es wird auch die benötigte Variable {\glqq ranknames\grqq} mittels folgendem Code gesetzt:
+\begin{lstlisting}[language=JavaScript]
+var ranknames = sendApiRequest({type: "grn"}, false).data;
+\end{lstlisting}
+\subsection{Funktionen}
+\subsubsection{checkRankName}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		modify & Wenn Wahr, existiert Rang bereits \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob ein Rangname bereits verwendet wird, sofern dieser geändert oder neu gesetzt wird. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{openModuleBasedRankName}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id & Identifikator eines Ranges \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion lädt alle Daten welche zum Öffnen des Modals zur Verwaltung von Modulbasierten Rangnamen benötigt wird. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{saveModulBasedRankName}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion speichert einen neuen modulbasierten Rangnamen. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}
+\subsubsection{deleteModuleBasedRankName}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		id & Identifikator eines modulbasierten Rangnamens \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht einen neuen modulbasierten Rangnamen. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}

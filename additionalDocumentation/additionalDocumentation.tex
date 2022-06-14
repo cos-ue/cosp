@@ -1,0 +1,107 @@
+\documentclass[11pt,headsepline,a4paper]{scrreprt}
+%onehalfspacing
+\usepackage[utf8]{inputenc} 
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc} %Schöner trennen
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{float}
+%\usepackage{kpfonts}
+
+\usepackage{longtable}
+\usepackage{svg}
+\usepackage{listings,xcolor}
+\usepackage{inconsolata}
+
+\usepackage[colorlinks,
+pdfpagelabels,
+pdfstartview = FitH,
+bookmarksopen = true,
+bookmarksnumbered = true,
+linkcolor = black,
+plainpages = false,
+hypertexnames = false,
+citecolor = black] {hyperref}%Paket/Befehl um verlinkungen im Inhaltsverzeichnis zu bekommen
+
+\usepackage{scrlayer-scrpage}
+\automark{chapter}
+\automark*{section}
+
+\definecolor{dkgreen}{rgb}{0,.6,0}
+\definecolor{dkblue}{rgb}{0,0,.6}
+\definecolor{dkyellow}{cmyk}{0,0,.8,.3}
+
+\lstdefinelanguage{JavaScript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle    = \color{dkblue},
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray},
+	identifierstyle=\color{dkgreen},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle    = \color{gray},
+	stringstyle     = \color{red},
+	morestring=[b]',
+	morestring=[b]"
+}
+
+\lstset{
+	language        = php,
+	basicstyle      = \small\ttfamily,
+	keywordstyle    = \color{dkblue},
+	stringstyle     = \color{red},
+	identifierstyle = \color{dkgreen},
+	commentstyle    = \color{gray},
+	emph            =[1]{php},
+	emphstyle       =[1]\color{black},
+	emph            =[2]{if,and,or,else},
+	emphstyle       =[2]\color{dkyellow},
+	numbers=left,
+	stepnumber=1,  
+	numberfirstline=true,
+	numberstyle=\footnotesize,
+	xleftmargin=4.0ex,
+	upquote=true,
+	showlines=true,
+	extendedchars=true,
+	literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+\begin{document}
+\setcounter{tocdepth}{3}
+\title{Dokumentation  \\ \normalsize{Citizen Science Platform {\glqq COSP\grqq}} }
+\date{\today}
+\author{Projektteam \\
+	\normalsize{
+		\begin{tabular}[t]{ll}
+			Version:  & \quad Beta 1.5.0 \\[1.2ex]
+		\end{tabular}
+	}
+}
+\maketitle
+
+%Titelseite
+%Inhaltsverzeichnis
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+\input{Kapitel/Rahmenbedingungen}
+\input{Kapitel/Farbkonventionen}
+\input{Kapitel/config}
+\input{Kapitel/api}
+\input{Kapitel/uapi}
+\input{Kapitel/mapi}
+\input{Kapitel/Database}
+\input{Kapitel/Files}
+\input{Kapitel/Functions}
+
+\end{document}

@@ -1,0 +1,69 @@
+\begin{usecase}
+	
+	\addtitle{Eigene Nutzerdaten ändern} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Endnutzer, Mitarbeiter, Administratoren}
+	\addfield{Endbenutzergruppen:}{Freigeschaltet}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Eigene Nutzerdaten\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Vorname ändern
+		\checkeditem {\glqq Ändern\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[1.a] Nachname ändern
+		\checkeditem[1.b] Vor- und Nachname ändern
+		\checkeditem[1.c] E-Mail ändern
+		\begin{enumerate}
+			\checkeditem E-Mail ändern
+			\checkeditem {\glqq Ändern\grqq}-Button betätigen
+			\checkeditem Mittels E-Mail mittels übermitteltem Link validieren
+		\end{enumerate}
+		\checkeditem[1.c] E-Mail und Vor- oder/und Nachname ändern
+		\begin{enumerate}
+			\checkeditem E-Mail und Vor- oder/und Nachname ändern 
+			\checkeditem {\glqq Ändern\grqq}-Button betätigen
+			\checkeditem Mittels E-Mail mittels übermitteltem Link validieren
+		\end{enumerate}
+	
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}
+
+\newpage
+\begin{usecase}
+	
+	\addtitle{Eigene Nutzerdaten ändern} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Endnutzer, Mitarbeiter, Administratoren}
+	\addfield{Endbenutzergruppen:}{Freigeschaltet}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{{\glqq Eigene Nutzerdaten\grqq} aufrufen}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem {\glqq Passwort ändern\grqq}-Button betätigen
+		\checkeditem gültiges aktuelles Passwort eingeben
+		\checkeditem gültiges neues Passwort eingeben
+		\checkeditem gültiges neues Passwort wiederholen
+		\checkeditem {\glqq Ändern\grqq}-Button betätigen
+	}
+	
+	\addscenario{Erweiterung:}{
+		\checkeditem[1.a] falsches aktuelles Passwort eingeben
+		\checkeditem[3.a] gültiges neues Passwort falsch wiederholen
+		
+	}
+	%Extensions: Alternate scenarios of success or failure.
+\end{usecase}

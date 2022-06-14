@@ -1,0 +1,108 @@
+\subsection{Allgemeines} Diese Datei enthält alle durch die Modul-API aufgerufene Funktionen sowie zusätzliche Funktionen, um die Datenstrukturierung der Antworten zu vereinheitlichen.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{getUserdataApi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username            & Nutzername \\ \hline
+		\$ignoreDeaktiviation & Wenn wahr, wird der Aktivierungsstatus ignoriert \\ \hline
+		\$apitoken            & Identifikator des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ermittelt alle Daten, welche zum Login des Nutzers und alle Funktionen eines Moduls notwendig sind. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Nutzerdaten-Tabelle
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getRoledataApi}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ermittelt die Rollendaten des gegebenen Benutzers. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Nutzerdaten-Tabelle
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateJson}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$array & Array mit strukturierten Eingabedaten \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion generiert aus einem Array ein Daten im JSON-Format. Die Antwort wird als String an den Aufrufer zurückgegeben.
+\subsubsection{generateError}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$input & Optionale Fehlermeldung oder andere Daten \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion generiert ein Array, welches eine Fehlermeldung darstellt. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateSuccess}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion generiert ein Array, welches eine Antwort auf einen erfolgreichen API-Aufruf darstellt. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{addRankPoints}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username & Nutzername \\ \hline
+		\$token    & Authentifizierungstoken eines Moduls \\ \hline
+		\$reason   & Begründung der Rangpunkte \\ \hline
+		\$points   & Anzahl der Rangpunkte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt dem angegebenen Benutzer die angegebenen Rangpunkte hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Rangpunkten der Nutzer
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getSourceTypesAPI}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion alle Typen von Quellen ab. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Typen von Quellen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{checkMailAddressExistentMoudleAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$email & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt dem angegebenen Benutzer die angegebenen Rangpunkte hinzu. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.

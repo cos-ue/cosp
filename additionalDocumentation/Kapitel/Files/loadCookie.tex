@@ -1,0 +1,22 @@
+\subsection{Allgemeines} Diese Datei öffnet das Cookie-Modal auf der Index-Seite, sollte dieses nicht bereits bestätigt worden sein.
+Die Ausführung des Codes findet im Browser statt. Das öffnen des Modals erfolgt mittels folgendem Code:
+\begin{lstlisting}[language=JavaScript]
+window.onload = function (){
+	if (testCookie('CookieAccept')){
+		if (getCookie('CookieAccept') == 'true')
+		{
+			setCookie('CookieAccept', true, 3650);
+			return;
+		}
+	}
+	$('#CookieBannerModal').modal({
+		keyboard: false,
+		backdrop: 'static'
+	});
+}
+\end{lstlisting}
+Dabei wird auch das schließen des Modals mittels Tastendruck beziehungsweise daneben Clickens verhindert.
+\subsection{Funktionen}
+\subsubsection{AcceptCookies}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion setzt einen Cookie, das der Nutzer Cookies akzeptiert und schließt das Modal.

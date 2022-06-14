@@ -1,0 +1,143 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen, welche durch die Nutzer-API aufgerufen werden.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{getPreviewPictureAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & alphanumerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion liefert einen Base64-Codiertes Vorschaubild zurück. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+\end{itemize}
+Die Antwort wird als Zeichenkette an den Aufrufer zurückgegeben.
+\subsubsection{getPictureFullsizeAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & alphanumerischer Identifikator eines Bildes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion liefert das Ursprungsbild als Binary zurück. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+	\item Dateisystem
+\end{itemize}
+Die Antwort wird als Binary an den Aufrufer zurückgegeben.
+\subsubsection{generateErrorUAPI}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion liefert einen generischen Fehler auf eine API-Anfrage. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateSuccessUAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$message & Nachricht (optional) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion liefert einen generischen Erfolg auf eine API-Anfrage. Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{generateJsonUAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$array & Array mit Daten \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion generiert das JSON für Antwort auf einen API-Anfrage. Die Antwort wird direkt Ausgegeben.
+\subsubsection{getStoryDataUAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & alphanumerischer Token einer Geschichte \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft alle Daten einer Geschichte ab und sendet diese zurück an den Aufrufer. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Geschichten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getStoriesDataUAPI}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$tokens & alphanumerische Identifikatoren von Geschichten \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft die Daten zu allen angegeben Geschichten ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Geschichten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{buildUserStoryArray}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token           & alphanumerischer Identifikator einer Geschichte \\ \hline
+		\$username        & Nutzername des Abfragenden \\ \hline
+		\$ValidationValue & Validierungswert des Abfragenden \\ \hline
+		\$apphashtoken    & Hash des alphanumerischen Modulidentifikators \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion generiert ein Array mit allen Daten einer Geschichte. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Geschichten
+	\item Tabelle mit Nutzerdaten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{validateStory}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$data & Zeichenkette mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion validiert die angegebene Geschichte. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsinformationen zu Geschichten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{validatePicture}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$data & Zeichenkette mit Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion validiert die angegebene Bilder. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Validierungsinformationen zu Bildern
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.

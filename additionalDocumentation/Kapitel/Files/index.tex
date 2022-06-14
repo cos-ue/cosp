@@ -1,0 +1,10 @@
+\subsection{Allgemeines} Diese Datei dient dem Login und ist die erste Seite auf welcher der Nutzer landet.
+Die Datei ist direkt durch den Nutzer aufrufbar. Sie setzt auch die entsprechende Konstante und bindet alle notwendigen Dateien ein:
+\begin{lstlisting}[language=php]
+define('NICE_PROJECT', true);
+require_once "bin/inc.php";
+\end{lstlisting}
+\subsection{Allgemeines}
+Auf dieser Seite kann sich der Nutzer authentifizieren oder sich als Gast anmelden. Alternativ kann hat er die Option über den Registrieren-Button zur Selbstregistrierung zu gelangen. Des Weiteren wird der Nutzer auch auf die Verwendung von Cookies aufmerksam gemacht.
+\subsection{Besonderheiten}
+Die Seite besitzt eine vereinfachte Navbar, da zu diesem Zeitpunkt nicht alle Funktionen der Navbar zur Verfügung stehen. Diese Seite dient auch dem Logout.

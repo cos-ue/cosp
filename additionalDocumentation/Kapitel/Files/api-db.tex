@@ -1,0 +1,97 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen um die Tabelle mit API's zu verwalten.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc-db.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-db-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{getAllApiTokens}
+\paragraph{Parameter} Die Funktion besitzt kene Parameter.
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller API-Token aus der Datenbank ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit API-Berechtigungsschlüsseln
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getAllApiTokensOrderedByToken}
+\paragraph{Parameter} Die Funktion besitzt kene Parameter.
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller API-Token aus der Datenbank ab. Die Antwort wird hat als Array-Schlüssel die Token der einzelnen Module. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit API-Berechtigungsschlüsseln
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{addApiToken}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$result & Array mit benötigten Informationen \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{\$result}Das Array enthält folgende Elemente:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		name & Name des neuen Moduls \\ \hline
+		rapi & Pfad zur Reverse-API des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt {\glqq COSP\grqq} ein neues Modul hinzu. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit API-Berechtigungsschlüsseln
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{deleteApiToken}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$token & Token eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht einen Modul Zugangstoken aus {\glqq COSP\grqq}. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit API-Berechtigungsschlüsseln
+\end{itemize}
+Die Funktion besitzt keinen Rückgabewert.
+\subsubsection{getApiTokenById}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$id & Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft die Daten einer API aus der Datenbank ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit API-Berechtigungsschlüsseln
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{updateApiData}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$id   & Identifikator eines Moduls \\ \hline
+		\$name & Name des Moduls \\ \hline
+		\$url  & Revers-API-Url des Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ändert Daten einer API aus der Datenbank ab. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit API-Berechtigungsschlüsseln
+\end{itemize}

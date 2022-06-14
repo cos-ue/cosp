@@ -1,0 +1,164 @@
+\newpage
+\section{Nutzer API-Spezifikation}\label{uapi}
+\subsection{Beschreibung}Diese API dient der Kommunikation zwischen einem Nutzer eines Moduls und den Inhalten die durch {\glqq COSP\grqq} bereit gestellt werden. Hauptsächlich unterstützt sie das Abrufen von Bildern und anderen Informationen. Durch diese API können keine Informationen geändert, gelöscht oder neu hinzugefügt werden. Jedoch können Geschichten und Bilder validiert werden. Diese API wird durch ein HMAC-Verfahren geschützt.
+\subsection{Befehlsübersicht}
+\begin{longtable}[H]{|c|p{12cm}|}
+		\hline
+		\textbf{Api-Befehl} & \textbf{Kurzbeschreibung}              \\ \hline
+		gpp                 & Vollbild laden          \\ \hline
+		gpf                 & Vorschaubild laden            \\ \hline
+		gus                 & Geschichte laden \\ \hline
+		gas                 & Alle Geschichten einer Liste laden \\ \hline
+		vas                 & Geschichte Validieren \\ \hline
+		vap                 & Bild validieren \\ \hline
+\end{longtable}
+\newpage
+\subsection{Befehle}
+\subsubsection{Vollbildladen}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Vollbild zu laden.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gpp                & Vollbild abrufen \\ \hline
+		data                & string            &                    & Token \\ \hline
+		seccode             & string            &                    & Security Code \\ \hline
+		time                & int               &                    & Timestamp \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist das Bild mit einem entsprechendem Header.
+\subsubsection{Vorschaubild laden}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um ein Vorschaubild zu laden.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gpf                & Vorschaubild abrufen \\ \hline
+		data                & string            &                    & Token \\ \hline
+		seccode             & string            &                    & Security Code \\ \hline
+		time                & int               &                    & Timestamp \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist das Bild mit einem entsprechendem Header.
+
+\subsubsection{Geschichte laden}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine einzelne Geschichte zu laden.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gus                & Geschichte abrufen \\ \hline
+		data                & string            &                    & Token \\ \hline
+		seccode             & string            &                    & Security Code \\ \hline
+		time                & int               &                    & Timestamp \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		result              & string           &                 & Erfolgreich wenn Wert {\glqq ack\grqq} ist \\ \hline
+		Code                & int              &                 & Erfolgreich wenn Wert {\glqq 0\grqq} ist \\ \hline
+		data                & array            &                 & Abgefragter Inhalt \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{data}Dieses Array enthält Einträge in der nachstehend dargestellten Form haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}    \\ \hline
+		token              & string            &                 & Identifikator der Geschichte \\ \hline
+		story              & string            &                 & Inhalt der Geschichte \\ \hline
+		title              & string            &                 & Titel der Geschichte \\ \hline
+		name               & string            &                 & Nutzername des Erstellers \\ \hline
+		date               & timestamp         &                 & Erstellungsdatum \\ \hline
+		validatedByUser    & bool              &                 & Wahr, wenn Nutzer bereits Geschichte validiert hat \\ \hline
+		validate           & bool              &                 & Wahr, Geschichte validiert ist \\ \hline
+		valLink            & string            &                 & Validierungslink \\ \hline
+		approval           & bool              &                 & Freischaltstatus \\ \hline
+		editable           & bool              &                 & Wahr, wenn Geschichte änderbar \\ \hline
+		deleted            & bool              &                 & Wahr, wenn Geschichte als gelöscht gilt \\ \hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Alle Geschichten einer Liste laden}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um  alle Geschichten einer Liste zu laden.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & gas                & Geschichten abrufen \\ \hline
+		data                & string            &                    & Token \\ \hline
+		seccode             & string            &                    & Security Code \\ \hline
+		time                & int               &                    & Timestamp \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die ist ein Array mit Elementen, welche folgende Einträge haben:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		token              & string            &                 & Identifikator der Geschichte \\ \hline
+		story              & string            &                 & Inhalt der Geschichte \\ \hline
+		title              & string            &                 & Titel der Geschichte \\ \hline
+		name               & string            &                 & Nutzername des Erstellers \\ \hline
+		date               & timestamp         &                 & Erstellungsdatum \\ \hline
+		validatedByUser    & bool              &                 & Wahr, wenn Nutzer bereits Geschichte validiert hat \\ \hline
+		validate           & bool              &                 & Wahr, Geschichte validiert ist \\ \hline
+		valLink            & string            &                 & Validierungslink \\ \hline
+		approval           & bool              &                 & Freischaltstatus \\ \hline
+		editable           & bool              &                 & Wahr, wenn Geschichte änderbar \\ \hline
+		deleted            & bool              &                 & Wahr, wenn Geschichte als gelöscht gilt \\ \hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Geschichte validieren}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine einzelne Geschichte zu validieren.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & vas                & Geschichte validieren \\ \hline
+		data                & string            &                    & Token \\ \hline
+		seccode             & string            &                    & Security Code \\ \hline
+		time                & int               &                    & Timestamp \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		result              & string           &                 & Erfolgreich wenn Wert {\glqq ack\grqq} ist \\ \hline
+		Code                & int              &                 & Erfolgreich wenn Wert {\glqq 0\grqq} ist \\ \hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Bild validieren}
+\paragraph{Kurzbeschreibung}Dieser API-Request wird dazu genutzt um eine einzelnes Bild zu validieren.
+\paragraph{Anfrage}Folgende Daten werden zu Anfrage benötigt:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}                                                                                               \\ \hline
+		type                & string            & vap                & Bild validieren \\ \hline
+		data                & string            &                    & Token \\ \hline
+		seccode             & string            &                    & Security Code \\ \hline
+		time                & int               &                    & Timestamp \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Antwort}Die Antwort ist wie folgt aufgebaut:
+\begin{table}[H]
+	\begin{tabular}{|c|c|c|p{6.5cm}|}
+		\hline
+		\textbf{Paramtername} & \textbf{Datentyp} & \textbf{Konstante} & \textbf{Kurzbeschreibung}            \\ \hline                
+		result              & string           &                 & Erfolgreich wenn Wert {\glqq ack\grqq} ist \\ \hline
+		Code                & int              &                 & Erfolgreich wenn Wert {\glqq 0\grqq} ist \\ \hline
+	\end{tabular}
+\end{table}

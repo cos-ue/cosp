@@ -1,0 +1,93 @@
+\subsection{Allgemeines} Diese Datei enthält eine Klasse mit allen E-Mail-Templates.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Klasse}
+\subsubsection{MailTemplates} Diese Klasse enthält alle im Projekt verwendeten E-Mail-Templates. Alle folgenden Funktionen geben den Inhalt der Nachricht als Zeichenkette zurück:
+\paragraph{RegisterMail}
+\subparagraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$Link     & Link zum Validieren der Mailadresse \\ \hline
+		\$Username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{Beschreibung} Die Funktion gibt ein instanziiertes Template zur Validierung der bei Registrierung gegebenen Mailadresse zurück.
+\paragraph{ZentralRegisterMail}
+\subparagraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$Username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{Beschreibung} Die Funktion gibt ein instanziiertes Template zur Benachrichtigung der Administrators und Mitarbeiter über einen neuen Nutzer zurück.
+\paragraph{ResetPasswordByMail}
+\subparagraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$Link     & Link zum Zurücksetzen des Passwortes \\ \hline
+		\$Username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{Beschreibung} Die Funktion gibt ein instanziiertes Template zum Passwort ändern durch den Nutzer bei vergessen Passwort zurück.
+\paragraph{MailChangedOldAddress}
+\subparagraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$newmail  & Neue E-Mailadresse des Nutzers \\ \hline
+		\$Username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{Beschreibung} Die Funktion gibt ein instanziiertes Template zur Information des Nutzers über eine geänderte E-Mailadresse zurück
+\paragraph{MailChangedNewAddress}
+\subparagraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$Link     & Link zum Validieren der neuen Mailadresse \\ \hline
+		\$Username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{Beschreibung} Die Funktion gibt ein instanziiertes Template zur Validierung der neuen E-Mailadresse des Nutzers zurück.
+\paragraph{ZentralMailChanged}
+\subparagraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$Username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{Beschreibung} Die Funktion gibt ein instanziiertes Template zur Benachrichtigung der Administrators und Mitarbeiter über eine geänderte Mailadresse eines Nutzers zurück.
+\paragraph{ZentralMailContact}
+\subparagraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$msg      & Nachricht des Nutzers \\ \hline
+		\$Username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\subparagraph{Beschreibung} Die Funktion gibt ein instanziiertes Template zur Benachrichtigung eines Mitarbeiters oder Administrators über eine Nachricht eines Nutzers.

@@ -1,0 +1,42 @@
+\subsection{Allgemeines} Diese Datei Einbindungen aller benötigten Dateien für den Datenbankzugriff.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Einbindungen}
+\subsubsection{Grundlegendes}
+Nachfolgend zu sehender Code-Block bindet alle benötigten Dateien in korrekter Reihenfolge ein. Beim Einbinden neuer Dateien, sind diese stets an das Ende zu schreiben, außer die Dateien sind Umstrukturierungen bereits existenten Dateien.
+\begin{lstlisting}[language=php]
+require_once '../bin/database/basic-db.php';
+require_once '../bin/database/statistics-basic-dbfunctions.php';
+require_once '../bin/database/user-db.php';
+require_once '../bin/database/role-db.php';
+require_once '../bin/database/session-db.php';
+require_once '../bin/database/api-db.php';
+require_once '../bin/database/point-reason-db.php';
+require_once '../bin/database/rank-point-db.php';
+require_once '../bin/database/ranks-db.php';
+require_once '../bin/database/picture-db.php';
+require_once '../bin/database/story-db.php';
+require_once '../bin/database/validate-story-db.php';
+require_once '../bin/database/validate-picture-db.php';
+require_once '../bin/database/logging.php';
+require_once '../bin/database/statistics-user.php';
+require_once '../bin/database/statistics-pictures-db.php';
+require_once '../bin/database/statistics-story-db.php';
+require_once '../bin/database/module-rank-db.php';
+require_once '../bin/database/source-type-db.php';
+require_once '../bin/database/module-rights-db.php';
+\end{lstlisting}
+\subsubsection{Besonderheit}
+Die Einbindungen sind immer mit {\glqq ../\grqq} anzufangen, da Sie für Subordner des Hauptordners gedacht sind.

@@ -1,0 +1,161 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen zum Zugriff auf die Tabelle mit modulbasierten Rechten.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc-db.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-db-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+	if (!defined('NICE_PROJECT')) {
+		die('Permission denied.');
+	}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{getAllModuleBasedRightsByUserID}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$id & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller modulbasierten Rechte eines Nutzers ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+	\item Tabelle mit Modulen
+	\item Tabelle mit Rollen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{addModuleBasedRole}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$nameId & Identifikator eines Nutzers \\ \hline
+		\$roleId & Identifikator einer Rolle \\ \hline
+		\$appID  & Identifikator einer Api \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt modulbasierte Rechte für einen Nutzer ein. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getModuleBasedRightsByID}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$id & Identifikator eines Modulrechtes \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft ein modulbasiertes Rechte ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+	\item Tabelle mit Modulen
+	\item Tabelle mit Rollen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{deleteModuleBasedRole}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$rid & Identifikator eines Modulrechtes \\ \hline
+		\$uid & Identifikator eines Nutzers \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht ein modulbasiertes Recht ab. Die Funktion hat Auswirkung folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getAllModuleBasedRightsByModulID}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$id & Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller modulbasierten Rechte eines Moduls ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+	\item Tabelle mit Modulen
+	\item Tabelle mit Rollen
+	\item Tabelle mit Nutzerinformationen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{updateModulRights}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$rightID & Identifikator eines Modulrechtes \\ \hline
+		\$roleID  & Identifikator einer Rolle \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion aktualisiert ein modulbasiertes Recht. Die Funktion hat Auswirkung folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getPermissionUsersOfModule}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$aid                & Identifikator eines Moduls \\ \hline
+		\$ReqPermissionValue & Benötigter Berechtigungswert \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ruft eine Liste aller Nutzeridentifikatoren eines Moduls ab einer bestimmten Berechtigung ab. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+	\item Tabelle mit Rollen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{updateDisableStateModuleRight}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$rightID & Identifikator eines Rechtes \\ \hline
+		\$state   & Status der Deaktivierung \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ändert den Deaktivierungsstatus einer Modulberechtigung. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.
+\subsubsection{getModuleRightByUsernameApiToken}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$username & Nutzername \\ \hline
+		\$token    & alphanumerischer Identifikator eines Moduls \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft die modulbasierte Berechtigung eines Nutzers für ein Modul. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit modulbasierten Rechten
+	\item Tabelle mit Moduldaten
+	\item Tabelle mit Rollen
+	\item Tabelle mit Nutzerinformationen
+\end{itemize}
+Die Antwort wird als strukturiertes Array an den Aufrufer zurückgegeben.

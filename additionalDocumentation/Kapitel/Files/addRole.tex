@@ -1,0 +1,19 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen die zusätzlich auf der Seite des Rangmanagements benötigt werden.
+Es wird auch die benötigte Variable {\glqq rolenames\grqq} mittels folgendem Code gesetzt:
+\begin{lstlisting}[language=JavaScript]
+var rolenames = sendApiRequest({type: "gar"}, false).data;
+\end{lstlisting}
+\subsection{Funktionen}
+\subsubsection{checkRoleName}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		modify & Wenn Wahr, existiert Rolle bereits \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob ein Rollenname bereits verwendet wird, sofern dieser geändert oder neu gesetzt wird. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}

@@ -1,0 +1,22 @@
+\subsection{Allgemeines} Diese Datei stellt eine Funktionsübersichtsseite dar und leitet die Nutzer zu den entsprechenden Seiten.
+Die Datei ist direkt durch den Nutzer aufrufbar. Sie setzt auch die entsprechende Konstante und bindet alle notwendigen Dateien ein:
+\begin{lstlisting}[language=php]
+define('NICE_PROJECT', true);
+require_once "bin/inc.php";
+\end{lstlisting}
+\subsection{Allgemeines}
+Es werden die Hauptfunktionen als Kacheln in der Mitte des Browserfensters dargestellt. Diese Ansicht wird automatisch aus einem Array generiert. Dieses Array hat folgende Form:
+\subsubsection{Array mit Links} Das Array enthält Eintrage mit folgenden Elementen:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Name} & \textbf{Beschreibung} \\ \hline
+		href           & relativer Link zur entsprechenden Seite \\ \hline
+		title          & Titel des Links \\ \hline
+		image          & Bild des Links \\ \hline
+		needeRoleValue & benötigte Rolle um Link zu nutzen \\ \hline
+		text           & Beschreibung der entsprechenden Funktion \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{Besonderheiten}
+Diese Seite soll den Nutzer ansprechend auf seine Möglichkeiten aufmerksam machen.

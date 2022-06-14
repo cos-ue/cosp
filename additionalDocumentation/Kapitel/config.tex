@@ -1,0 +1,255 @@
+\chapter{Konfiguration}\label{chapter:config}
+\section{Grundlegendes}
+In der Konfigurationsdatei, welche im Ordner {\glqq bin\grqq} zu finden ist, können alle wichtigen Parameter der Website eingestellt werden. Hierzu ist im ersten Schritt die Datei mit dem Pfad {\glqq bin/config-sample.php\grqq} nach {\glqq bin/config.php\grqq} zu kopieren. Anschließend sind alle entsprechenden Einstellungen zur Kommunikation mit der Datenbank und zum Mailversand zu treffen. Hiernach sollten alle wichtigen Parameter bereits korrekt vordefiniert sein.
+\section{Parameter}
+\subsection{Auflistung}
+In Nachfolgender Tabelle sind alle Konfigurationsparameter mit einer entsprechenden Kurzbeschreibung zusammengefasst. Im Anschluss an die Tabelle finden Sie eine ausführliche Beschreibung.
+\begin{longtable}[H]{|c|l|}
+		\hline
+		\textbf{Parameter}   & \textbf{Kurzbeschreibung}                                                                                                     \\ \hline
+		\$SQL\_SERVER        & Adresse des SQL-Servers                                                                                                     \\ \hline	
+		\$SQL\_USER          & Nutzername am SQL-Server                                                                                                     \\ \hline	
+		\$SQL\_PASSWORD      & Passwort am SQL-Server                                                                                                     \\ \hline	
+		\$SQL\_SCHEMA        & Schema auf dem SQL-Servers                                                                                                     \\ \hline	
+		\$SQL\_PREFIX        & Tabellennamenprefix im Schema auf dem SQL-Servers                                                                                                     \\ \hline	
+		\$SQL\_Connector     & Angabe des zu nutzenden SQL-Connectors                                                                                                     \\ \hline	
+		\$BASE\_DMN          & Grunddomain des Webservers                                                                                                     \\ \hline	
+		\$SELF\_REGISTRATION & Freischaltung der Selbstregistrierung                                                                                                     \\ \hline	
+		\$MAIN\_CAPTION      & Hauptschriftzug oder Namenskürzel der Plattform                                                                                                     \\ \hline	
+		\$TAGLINE\_CAPTION   & Vollständiger Name der Plattform                                                                                                     \\ \hline	
+		\$DEBUG              & Versetzt Plattform in Debug-Modus                                                                                                     \\ \hline	
+		\$DEBUG\_LEVEL       & Tiefe der Debug-Ausgaben                                                                                                     \\ \hline	
+		\$PWD\_LENGTH        & Mindestpasswortlänge                                                                                                     \\ \hline	
+		\$PWD\_ALGORITHM     & Algorithmus zur Verschlüsselung neuer Passwörter                                                                                                     \\ \hline	
+		\$RANDOM\_STRING\_LENGTH     & Länge zufallsgenerierter Zeichenketten                                                                                                     \\ \hline	
+		\$DOMAIN            & Domain der Plattform                                                                                                     \\ \hline	
+		\$SENDER\_ADDRESS   & Von-Adresse versendeter Mails                                                                                                     \\ \hline	
+		\$HMAC\_SECRET      & Geheimnis für diverse kryptographische Funktionen                                                                                                     \\ \hline	
+		\$UPLOAD\_DIR       & Unterverzeichnis in das hochgeladene Bilder gespeichert werden                                                                                                   \\ \hline	
+		\$ZENTRAL\_MAIL     & Mailadresse an die Administrationsmails versendet werden                                                                                                     \\ \hline	
+		\$ROLE\_GUEST       & Rollenwert den ein Gast benötigt                                                                                                    \\ \hline	
+		\$ROLE\_UNAUTH\_USER         & Rollenwert den ein unauthentifizierter Nutzer benötigt                                                                                                    \\ \hline	
+		\$ROLE\_AUTH\_USER           & Rollenwert den ein authentifizierter Nutzer benötigt                                                                                                    \\ \hline	
+		\$ROLE\_EMPLOYEE             & Rollenwert den ein Mitarbeiter benötigt                                                                                                    \\ \hline	
+		\$ROLE\_ADMIN                & Rollenwert den ein Administrator benötigt                                                                                                    \\ \hline	
+		\$BETA              & Versetzt Plattform in Beta-Modus                                                                                                     \\ \hline	
+		\$MAINTENANCE       & Versetzt Plattform in Wartungsmodus                                                                                                     \\ \hline	
+		\$IMPRESSUM\_NAME   & Name des Inhaltsverantwortlichen                                                                                                     \\ \hline
+		\$IMPRESSUM\_STREET & Straße und Hausnummer der Adresse des Inhaltsverantwortlichen                                                                                                     \\ \hline	
+		\$IMPRESSUM\_CITY   & Stadt und Postleitzahl der Adresse des Inhaltsverantwortlichen                                                                                                     \\ \hline	
+		\$SPECIAL\_CHARS\_CAPTCHA    & Schaltet Sonderzeichen für Captcha-Generator ein                                                                                                     \\ \hline
+		\$PRIVACY\_COMPANY\_NAME  & Name der Firma/Organisation                                                                                                     \\ \hline
+		\$PRIVACY\_COMPANY\_STREET & Straße und Hausnummer der Adresse der Firma/Organisation                                                                                                     \\ \hline	
+		\$PRIVACY\_COMPANY\_CITY   & Stadt und Postleitzahl der Adresse der Firma/Organisation                                                                                                     \\ \hline	
+		\$PRIVACY\_COMPANY\_FON    & Telefonnummer der Firma/Organisation                                                                                                     \\ \hline	
+		\$PRIVACY\_COMPANY\_FAX    & Faxnummer der Firma/Organisation                                                                                                     \\ \hline	
+		\$PRIVACY\_COMPANY\_MAIL   & Mailadresse der Firma/Organisation                                                                                                     \\ \hline	
+		\$PRIVACY\_REP\_NAME      & Name des Datenschutzbeauftragten                                                                                                     \\ \hline
+		\$PRIVACY\_REP\_POS       & Position der Datenschutzbeauftragten 																										\\ \hline
+		\$PRIVACY\_REP\_STREET    & Straße und Hausnummer der Adresse des Datenschutzbeauftragten                                                                                                     \\ \hline	
+		\$PRIVACY\_REP\_CITY      & Stadt und Postleitzahl der Adresse des Datenschutzbeauftragten                                                                                                     \\ \hline	
+		\$PRIVACY\_REP\_FON       & Telefonnummer des Datenschutzbeauftragten                                                                                                     \\ \hline	
+		\$PRIVACY\_REP\_FAX       & Faxnummer des Datenschutzbeauftragten                                                                                                     \\ \hline	
+		\$PRIVACY\_REP\_MAIL      & Mailadresse des Datenschutzbeauftragten                                                                                                     \\ \hline		
+		\$DIRECT\_DELETE          & Daten direkt löschen                                                                                                     \\ \hline
+		\$ADDITIONAL\_MAIL\_PARAM & Zusätzlich Parameter zum Senden einer Mail 	                                                                             \\ \hline
+\end{longtable}
+\newpage
+\subsection{Parameterbeschreibung}
+\subsubsection{\$SQL\_SERVER}
+\paragraph{Beschreibung}Dieser Parameter setzt die Adresse des zu nutzenden SQL-Servers. Hier sollte daher eine Valide URI oder IP zu einem MySQL- oder MariaDB-Server angegeben werden. Es wird ein MariaDB-Server bevorzugt.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$SQL\_USER}
+\paragraph{Beschreibung}Dieser Parameter setzt den am SQL-Server zu nutzenden Nutzernamen.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$SQL\_PASSWORD}
+\paragraph{Beschreibung}Dieser Parameter setzt das am SQL-Server zu nutzenden Passwort für den angegebenen Nutzernamen. 
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$SQL\_SCHEMA}
+\paragraph{Beschreibung}Dieser Parameter setzt das am SQL-Server zu nutzende Schema.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$SQL\_PREFIX}
+\paragraph{Beschreibung}Dieser Parameter setzt das vor jedem Tabellennamen stehende Prefix. Es sollte üblicherweise mit einem {\glqq \_\grqq} enden.
+\paragraph{Standardwert}Der Standartwert ist {\glqq dload\_\_\grqq}.
+
+\subsubsection{\$SQL\_Connector}
+\paragraph{Beschreibung}Dieser Parameter setzt den durch PHP zu nutzenden SQL-Connector. Aktuell ist nur PHP-PDO als Connector implementiert. 
+\paragraph{Parameterwert}Es kann einer der folgenden Werte eingetragen werden: {\glqq pdo\grqq}.
+\paragraph{Standardwert}Der Standartwert ist {\glqq pdo\grqq}.
+
+\subsubsection{\$BASE\_DMN}
+\paragraph{Beschreibung}Dieser Parameter gibt die Basisdomain an, auf welcher dise Plattform erreichbar ist.
+\paragraph{Parameterwert}Sei {\glqq plattform.beliebieg.tld\grqq} die Domain dieser Plattform, dann ist der Wert für diesen Parameter {\glqq .beliebieg.tld\grqq}.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$SELF\_REGISTRATION}
+\paragraph{Beschreibung}Dieser Parameter gibt an, ob die Selbstregistrierung möglich ist.
+\paragraph{Parameterwert}Es kann einer der folgenden Werte eingetragen werden: {\glqq true\grqq}, {\glqq false\grqq}.
+\paragraph{Standardwert}Der Standartwert ist {\glqq true\grqq}.
+
+\subsubsection{\$MAIN\_CAPTION}
+\paragraph{Beschreibung}Dieser Parameter setzt den Haupttitel der Plattform. Dieser ist üblicherweise eine Abkürzung.
+\paragraph{Standardwert}Der Standartwert ist {\glqq COSP\grqq}.
+
+\subsubsection{\$TAGLINE\_CAPTION}
+\paragraph{Beschreibung}Dieser Parameter setzt den vollständigen Titel der Plattform. Dieser ist üblicherweise keine Abkürzung.
+\paragraph{Standardwert}Der Standartwert ist {\glqq Citizen Open Science Plattform\grqq}.
+
+\subsubsection{\$DEBUG}
+\paragraph{Beschreibung}Dieser Parameter kann den Debug-Modus der Plattform aktivieren. Im Produktiveinsatz sollte der Wert des Parameters stets {\glqq false\grqq} sein.
+\paragraph{Parameterwert}Es kann einer der folgenden Werte eingetragen werden: {\glqq true\grqq}, {\glqq false\grqq}.
+\paragraph{Standardwert}Der Standartwert ist {\glqq true\grqq}.
+
+\subsubsection{\$DEBUG\_LEVEL} \label{config:debug-level}
+\paragraph{Beschreibung}Dieser Parameter gibt die Anzahl und tiefe der Debug-Ausgaben an. Es ist ein Integerwert zu wählen. Dieser Parameter ist nur bei aktivierten Debug-Modus von Relevanz. Bei einem Wert über 3 können API-Anfragen möglicherweise Debug-Ausgaben beinhalten und daher nicht vom Anfragenden System verarbeitet werden.
+\paragraph{Parameterwert}Es kann eine Werte zwischen 0 und 8 eingetragen werden.
+\paragraph{Standardwert}Der Standartwert ist {\glqq 3\grqq}.
+
+\subsubsection{\$PWD\_LENGTH}
+\paragraph{Beschreibung}Dieser Parameter gibt die Mindestlänge des Passwortes an. Er sollte stets größer 3 sein.
+\paragraph{Parameterwert}Es kann ein Wert der Natürlichen Zahlen, welcher größer 3 ist angegeben werden.
+\paragraph{Standardwert}Der Standartwert ist {\glqq 8\grqq}.
+
+\subsubsection{\$PWD\_ALGORITHM}
+\paragraph{Beschreibung}Dieser Parameter gibt zum Passwort speichern zu verwenden Hashalgorithmus an. 
+\paragraph{Parameterwert}Es kann einer der folgenden Werte eingetragen werden: {\glqq PASSWORD\_DEFAULT\grqq}, {\glqq PASSWORD\_BCRYPT\grqq}, {\glqq PASSWORD\_ARGON2I\grqq}, {\glqq PASSWORD\_ARGON2ID\grqq}.
+\paragraph{Standardwert}Der Standartwert ist {\glqq PASSWORD\_ARGON2ID\grqq}. Unter PHP 7.2 sollte als Standartwert {\glqq PASSWORD\_ARGON2I\grqq} gewählt werden.
+
+\subsubsection{\$RANDOM\_STRING\_LENGTH}
+\paragraph{Beschreibung}Dieser Parameter gibt die Länge zufallsgenerierter Zeichenketten an.
+\paragraph{Parameterwert}Es kann ein Wert der Natürlichen Zahlen, welcher größer 20 ist angegeben werden.
+\paragraph{Standardwert}Der Standartwert ist {\glqq 170\grqq}.
+
+\subsubsection{\$DOMAIN}
+\paragraph{Beschreibung}Dieser Parameter setzt die Domain, unter welcher die Plattform im Internet mittels eines geeigneten Webbrowsers aufrufbar ist.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$SENDER\_ADDRESS}
+\paragraph{Beschreibung}Dieser Parameter setzt die Absenderadresse für Systemmails
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$HMAC\_SECRET} \label{config:hmac-secret}
+\paragraph{Beschreibung}Dieser Parameter setzt das genutzte Geheimnis für multiple kryptographische Funktionen.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$UPLOAD\_DIR}
+\paragraph{Beschreibung}Dieser Parameter setzt das Verzeichnis zum Speichern von hochgeladenen Bildern.
+\paragraph{Parameterwert}Es kann jeder beliebige Unterpfad im Webverzeichnis hier relativ zum Wurzelverzeichnis der Website angegeben werden. Der Pfad darf nicht absolut sein.
+\paragraph{Standardwert}Der Standartwert ist {\glqq images/uploadMat\grqq}.
+
+\subsubsection{\$ZENTRAL\_MAIL} \label{config:zentral-mail}
+\paragraph{Beschreibung}Dieser Parameter Mailadresse an welche Mails Systemmails für administrative Anfragen gesendet werden. Diese Mailadresse erhält auch alle Anfragen, welche über das Kontaktformular eingesendet werden.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$ROLE\_GUEST}
+\paragraph{Beschreibung}Dieser Parameter setzt den mindest Rollenwert für den Gastnutzer.
+\paragraph{Standardwert}Der Standartwert ist {\glqq 0\grqq}.
+
+\subsubsection{\$ROLE\_UNAUTH\_USER}
+\paragraph{Beschreibung}Dieser Parameter setzt den mindest Rollenwert für den unautorisierten Nutzer.
+\paragraph{Standardwert}Der Standartwert ist {\glqq 1\grqq}.
+
+\subsubsection{\$ROLE\_AUTH\_USER}
+\paragraph{Beschreibung}Dieser Parameter setzt den mindest Rollenwert für den autorisierten Nutzer.
+\paragraph{Standardwert}Der Standartwert ist {\glqq 2\grqq}.
+
+\subsubsection{\$ROLE\_EMPLOYEE}
+\paragraph{Beschreibung}Dieser Parameter setzt den mindest Rollenwert für einen Mitarbeiter.
+\paragraph{Standardwert}Der Standartwert ist {\glqq 10\grqq}.
+
+\subsubsection{\$ROLE\_ADMIN}
+\paragraph{Beschreibung}Dieser Parameter setzt den mindest Rollenwert für einen Administrator.
+\paragraph{Standardwert}Der Standartwert ist {\glqq 20\grqq}.
+
+\subsubsection{\$BETA}
+\paragraph{Beschreibung}Dieser Parameter versetzt die Plattform in den Beta-Modus. Der Zugriff auf die Plattform ist dann nur noch mit einem entsprechenden Link möglich. Grundsätzlich ist für einen Zugriff auf die Website das Suffix {\glqq ?b=0\grqq} an die im Parameter {\glqq \$DOMAIN\grqq} genannte URI anzuhängen.
+\paragraph{Parameterwert}Es kann einer der folgenden Werte eingetragen werden: {\glqq true\grqq}, {\glqq false\grqq}.
+\paragraph{Standardwert}Der Standartwert ist {\glqq false\grqq}.
+
+\subsubsection{\$MAINTENANCE}
+\paragraph{Beschreibung}Dieser Parameter versetzt die Plattform in den Wartungsmodus. Der Zugriff auf die Plattform ist dann nur noch mit einem entsprechenden Link möglich. Grundsätzlich ist für einen Zugriff auf die Website das Suffix {\glqq ?m=0\grqq} an die im Parameter {\glqq \$DOMAIN\grqq} genannte URI anzuhängen.
+\paragraph{Parameterwert}Es kann einer der folgenden Werte eingetragen werden: {\glqq true\grqq}, {\glqq false\grqq}.
+\paragraph{Standardwert}Der Standartwert ist {\glqq false\grqq}.
+
+\subsubsection{\$IMPRESSUM\_NAME} \label{config:impressum-name}
+\paragraph{Beschreibung}Dieser Parameter setzt den Name des Inhaltsverantwortlichen der Plattform im Impressum.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$IMPRESSUM\_STREET} \label{config:impressum-street}
+\paragraph{Beschreibung}Dieser Parameter setzt den Straßenname und die Hausnummer der Adresse des Inhaltsverantwortlichen im Impressum.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$IMPRESSUM\_CITY} \label{config:impressum-city}
+\paragraph{Beschreibung}Dieser Parameter setzt den Ort und die Postleitzahl der Adresse des Inhaltsverantwortlichen im Impressum.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$SPECIAL\_CHARS\_CAPTCHA}
+\paragraph{Beschreibung}Dieser Parameter ermöglicht die Nutzung von Sonderzeichen in Captcha-Codes.
+\paragraph{Parameterwert}Es kann einer der folgenden Werte eingetragen werden: {\glqq true\grqq}, {\glqq false\grqq}.
+\paragraph{Standardwert}Der Standartwert ist {\glqq true\grqq}.
+
+\subsubsection{\$PRIVACY\_COMPANY\_NAME} \label{config:privacy-comp-name}
+\paragraph{Beschreibung}Dieser Parameter setzt den Name der Firma oder Organisation der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_COMPANY\_STREET} \label{config:privacy-comp-street}
+\paragraph{Beschreibung}Dieser Parameter setzt den Straßennamen und die Hausnummer der Adresse der Firma oder Organisation der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_COMPANY\_CITY} \label{config:privacy-comp-city}
+\paragraph{Beschreibung}Dieser Parameter setzt den Ortsnamen und die Postleitzahl der Adresse der Firma oder Organisation der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_COMPANY\_FON} \label{config:privacy-comp-fon}
+\paragraph{Beschreibung}Dieser Parameter setzt die Telefonnummer der Firma oder Organisation der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_COMPANY\_FAX} \label{config:privacy-comp-fax}
+\paragraph{Beschreibung}Dieser Parameter setzt die Faxnummer der Firma oder Organisation der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_COMPANY\_MAIL} \label{config:privacy-comp-mail}
+\paragraph{Beschreibung}Dieser Parameter setzt die Mailadresse der Firma oder Organisation der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_REP\_NAME} \label{config:privacy-rep-name}
+\paragraph{Beschreibung}Dieser Parameter setzt den Name des Datenschutzverantwortlichen der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_REP\_POS}\label{config:privacy-rep-pos}
+\paragraph{Beschreibung}Dieser Parameter setzt die Position des Datenschutzverantwortlichen der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_REP\_STREET} \label{config:privacy-rep-street}
+\paragraph{Beschreibung}Dieser Parameter setzt den Straßennamen und die Hausnummer der Adresse des Datenschutzverantwortlichen der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_REP\_CITY} \label{config:privacy-rep-city}
+\paragraph{Beschreibung}Dieser Parameter setzt den Ortsnamen und die Postleitzahl der Adresse des Datenschutzverantwortlichen der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_REP\_FON} \label{config:privacy-rep-fon}
+\paragraph{Beschreibung}Dieser Parameter setzt die Telefonnummer des Datenschutzverantwortlichen der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_REP\_FAX} \label{config:privacy-rep-fax}
+\paragraph{Beschreibung}Dieser Parameter setzt die Faxnummer des Datenschutzverantwortlichen der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$PRIVACY\_REP\_MAIL} \label{config:privacy-rep-mail}
+\paragraph{Beschreibung}Dieser Parameter setzt die Mailadresse des Datenschutzverantwortlichen der Plattform in der Datenschutzerklärung.
+\paragraph{Standardwert}Es gibt keinen Standardwert.
+
+\subsubsection{\$DIRECT\_DELETE}\label{config:direct-delete}
+\paragraph{Beschreibung}Dieser Parameter legt fest, ob Daten direkt gelöscht werden oder nur als gelöscht markiert werden.
+\paragraph{Parameterwert}Es kann einer der folgenden Werte eingetragen werden: {\glqq true\grqq} (direkt löschen), {\glqq false\grqq} (markieren).
+\paragraph{Standardwert}Der Standartwert ist {\glqq false\grqq}.
+
+\subsubsection{\$ADDITIONAL\_MAIL\_PARAM} \label{config:additional-mail-header}
+\paragraph{Beschreibung}Dieser Parameter ermöglicht es, zusätzliche Mail-Header zu setzen.
+\paragraph{Parameterwert}Es werden Schlüssel-Werte-Paare erwartet. Zum Beispiel: "CC": "name@domain.tld".
+\paragraph{Standardwert}Der Standartwert ist ein Leeres Array.

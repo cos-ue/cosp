@@ -1,0 +1,16 @@
+\subsection{Allgemeines} Diese Datei dient der Verwaltung angelegter Module.
+Die Datei ist direkt durch den Nutzer aufrufbar. Sie setzt auch die entsprechende Konstante und bindet alle notwendigen Dateien ein:
+\begin{lstlisting}[language=php]
+define('NICE_PROJECT', true);
+require_once "bin/inc.php";
+\end{lstlisting}
+Des Weiteren wird noch die Berechtigung des Aufrufers geprüft:
+\begin{lstlisting}[language=php]
+checkLoginDeny($LOGIN);
+checkPermission(config::$ROLE_ADMIN);
+\end{lstlisting}
+Dieser muss mindestens die Rolle eines Administrators besitzen.
+\subsection{Allgemeines}
+Die Seite verfügt über die Möglichkeit ein bestehende Verbindung zu einem Modul zu löschen. Das Löschen eines Moduls ist irreversibel.
+\subsection{Besonderheiten}
+Es erfolgt auch eine Auflistung aller Module inklusive der Links zu den Reverse-APIs.

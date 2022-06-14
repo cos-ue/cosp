@@ -1,0 +1,106 @@
+\begin{usecase}
+	
+	\addtitle{Cookies Akzeptieren} 
+	
+	%Primary Actor: Calls on the system to deliver its services.
+	\addfield{Benutzer:}{Endnutzer, Mitarbeiter, Administratoren}
+	\addfield{Endbenutzergruppen:}{nicht Authentifiziert, Authentifiziert, Freigeschaltet}
+	
+	%Preconditions: What must be true on start and worth telling the reader?
+	\addfield{Vorbedingungen:}{keine}
+	%when multiple
+	%\additemizedfield{Preconditions:}{} 
+	
+	%Main Success Scenario: A typical, unconditional happy path scenario of success.
+	\addscenario{Szenario:}{
+		\checkeditem Seite aufrufen
+		\checkeditem {\glqq Akzeptieren\grqq}-Button betätigen
+		\checkeditem Seite neu laden
+	}	
+\end{usecase}
+\newpage
+
+\begin{usecase}
+
+\addtitle{Login} 
+
+%Primary Actor: Calls on the system to deliver its services.
+\addfield{Benutzer:}{Endnutzer, Mitarbeiter, Administratoren}
+\addfield{Endbenutzergruppen:}{nicht Authentifiziert, Authentifiziert, Freigeschaltet}
+
+%Preconditions: What must be true on start and worth telling the reader?
+\addfield{Vorbedingungen:}{keine}
+%when multiple
+%\additemizedfield{Preconditions:}{} 
+
+%Main Success Scenario: A typical, unconditional happy path scenario of success.
+\addscenario{Szenario:}{
+	\checkeditem Nutzername eingeben
+	\checkeditem Passwort eingeben
+	\checkeditem {\glqq Anmelden\grqq}-Button betätigen
+}
+
+%Extensions: Alternate scenarios of success or failure.
+\addscenario{Erweiterung:}{
+	\checkeditem[2.a] Falscher Nutzername
+	\checkeditem[3.a] Reset Passwort
+	\begin{enumerate}
+		\checkeditem Falsches Passwort eingeben
+		\checkeditem {\glqq Anmelden\grqq}-Button betätigen
+		\checkeditem {\glqq Passwort neusetzen\grqq}-Button betätigen
+	\end{enumerate}
+	\checkeditem[3.a] Falsches Passwort
+	\begin{enumerate}
+		\checkeditem Falsches Passwort eingeben
+		\checkeditem {\glqq Anmelden\grqq}-Button betätigen
+		\checkeditem {\glqq Erneut versuchen\grqq}-Button betätigen
+	\end{enumerate}
+}
+
+
+\end{usecase}
+\newpage
+\begin{usecase}
+\addtitle{Registrieren} 
+
+%Primary Actor: Calls on the system to deliver its services.
+\addfield{Benutzer:}{Guest, Mitarbeiter, Administratoren}
+\addfield{Endbenutzergruppen:}{}
+
+%Preconditions: What must be true on start and worth telling the reader?
+\addfield{Vorbedingungen:}{}
+%when multiple
+%\additemizedfield{Preconditions:}{} 
+
+%Main Success Scenario: A typical, unconditional happy path scenario of success.
+\addscenario{Szenario:}{
+	\checkeditem {\glqq Registrieren\grqq}-Button betätigen
+	\checkeditem Nutzername eingeben (nicht vorhanden)
+	\checkeditem E-Mail-Adresse eingeben
+	\checkeditem Passwort eingeben
+	\checkeditem Passwort wiederholt eingeben
+	\checkeditem {\glqq Registrieren\grqq}-Button betätigen
+}
+
+%Extensions: Alternate scenarios of success or failure.
+\addscenario{Erweiterung:}{
+	\checkeditem[2.a] Vorhandenen Nutzernamen eingeben
+	\checkeditem[2.b] {\glqq Anmelden\grqq}-Button betätigen
+	\checkeditem[3.a] Zusätzliche Informationen Eingeben
+		\begin{enumerate}
+			\checkeditem Vorname oder Nachname eingeben
+			\checkeditem E-Mail-Adresse eingeben
+		\end{enumerate}
+	\checkeditem[3.b] Zusätzliche Informationen Eingeben
+		\begin{enumerate}
+			\checkeditem Vorname und Nachname eingeben
+			\checkeditem E-Mail-Adresse eingeben
+		\end{enumerate}
+	\checkeditem[5.a] Anderes Passwort als Wiederholung eingeben
+}
+
+
+%Miscellaneous: Such as open issues/questions
+%\addfield{Open Issues:}{}
+
+\end{usecase}

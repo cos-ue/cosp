@@ -1,0 +1,23 @@
+\subsection{Allgemeines} Diese Datei dient enthält alle Funktionen, welche für die Statistik-Seite zusätzlich benötigt werden.
+Die Ausführung des Codes findet im Browser statt. Hier wird eine Variable für statistische Daten gesetzt:
+\begin{lstlisting}[language=JavaScript]
+var StatData = {};
+\end{lstlisting} 
+\subsection{Funktionen}
+\subsubsection{generateConfig}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		ID   & Position der Daten im {\glqq StatData\grqq}-Array \\ \hline
+		type & Typ der Zeiteinheit (Tag: D, Woche: W, Monat: M, Jahr; Y) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion erzeugt die Konfiguration, welche für eine Anzeige der Daten mittels {\glqq Chart.js\grqq} benötigt wird.
+\subsubsection{loadStatisticalData}
+\paragraph{Parameter} Die Funktion besitzt keine Parameter.
+\paragraph{Beschreibung} Die Funktion lädt alle benötigten Daten mittels API. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Management-API
+\end{itemize}

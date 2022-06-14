@@ -1,0 +1,24 @@
+\subsection{Allgemeines} Diese Datei stellt entsprechende PHp-Initialwerte ein.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\subsection{Allgemeines}
+Momentan wird die Lebenszeit der Session auf 24h gesetzt. Es erfolgt bei fast jedem Zugriff eine Bereinigung alter Sessions.
+\begin{lstlisting}[language=php]
+ini_set('session.gc_maxlifetime', 86400);
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+\end{lstlisting}
+\subsection{Besonderheiten}
+Hier sind alle Projektweiten PHP-Einstellungen vorzunehmen.

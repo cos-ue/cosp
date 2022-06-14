@@ -1,0 +1,61 @@
+\subsection{Allgemeines} Diese Datei enthält die Beispielkonfiguration beziehungsweise die Konfiguration.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & keiner \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}. Alle Nachfolgenden {\glqq Funktionen\grqq} sind statische Werte der Klasse {\glqq configsample\grqq}. Für Detailbeschreibungen und Standardwerte siehe \autoref{chapter:config}.
+\subsection{Installationsanweisungen} Für einen produktiven Einsatz der Konfigurationsdatei muss sie von {\glqq config-sample.php\grqq} in {\glqq config.php\grqq} kopiert werden. Anschließend muss die Klasse {\glqq configsample\grqq} in {\glqq config\grqq} umbenannt werden.
+\subsection{Funktionen}
+\subsubsection{\$SQL\_SERVER} Setzt den zu verwendenden SQL-Server. Dieser sollte im Optimalfall ein MariaDB-Server sein.
+\subsubsection{\$SQL\_USER} Setzt den Nutzernamen am SQL-Server.
+\subsubsection{\$SQL\_PASSWORD} Setzt das Passwort des Nutzers am SQL-Server.
+\subsubsection{\$SQL\_SCHEMA} Setzt das Schema am SQL-Server.
+\subsubsection{\$SQL\_PREFIX} Setzt das zu nutzende Präfix für die SQL-Tabellen.
+\subsubsection{\$SQL\_Connector} Bestimmt den SQL-Connector. Momentan ist nur der PDO-Connector implementiert.
+\subsubsection{\$BASE\_DMN} Setzt die Basis-Domain der Anwendung.
+\subsubsection{\$SELF\_REGISTRATION} Konfigurationsflag für Selbstregistrierung.
+\subsubsection{\$MAIN\_CAPTION} Setzt den Hauptname der Anwendung.
+\subsubsection{\$TAGLINE\_CAPTION} Setzt den Langname der Anwendung.
+\subsubsection{\$DEBUG} Schaltet Debug-Funktionen frei.
+\subsubsection{\$DEBUG\_LEVEL} Setzt das Debug-Level.
+\subsubsection{\$PWD\_LENGTH} Setzt die mindestens benötigte Passwortlänge.
+\subsubsection{\$PWD\_ALGORITHM} Setzt den Hash-Algorithmus zur Passwortspeicherung.
+\subsubsection{\$RANDOM\_STRING\_LENGTH} Setzt die Länge von zufällig generierten Zeichenketten.
+\subsubsection{\$DOMAIN} Setzt die Domain der Anwendung.
+\subsubsection{\$SENDER\_ADDRESS} Setzt die Adresse, von welcher aus E-Mails versendet werden.
+\subsubsection{\$HMAC\_SECRET} Setzt das Geheimnis für die Generierung von Hashed-Message-Authentikation-Codes.
+\subsubsection{\$UPLOAD\_DIR} Setzt das Verzeichnis, in welchem Hochgeladene Bilder gespeichert werden.
+\subsubsection{\$ZENTRAL\_MAIL} Setzt die Mailadresse des Administrators.
+\subsubsection{\$ROLE\_GUEST} Setzt den Mindestwert der Rolle {\glqq Gast\grqq}.
+\subsubsection{\$ROLE\_UNAUTH\_USER} Setzt den Mindestwert der Rolle {\glqq nicht authentifizierter Nutzer\grqq}.
+\subsubsection{\$ROLE\_AUTH\_USER} Setzt den Mindestwert der Rolle {\glqq Nutzer\grqq}.
+\subsubsection{\$ROLE\_EMPLOYEE} Setzt den Mindestwert der Rolle {\glqq Mitarbeiter\grqq}.
+\subsubsection{\$ROLE\_ADMIN} Setzt den Mindestwert der Rolle {\glqq Administrator\grqq}.
+\subsubsection{\$BETA} Schaltet den Beta-Modus an.
+\subsubsection{\$MAINTENANCE} Schaltet den Wartungs-Modus an.
+\subsubsection{\$IMPRESSUM\_NAME} Setzt den Namen des Verantwortlichen im Impressum.
+\subsubsection{\$IMPRESSUM\_STREET} Setzt den Straßennamen und die Hausnummer des Verantwortlichen im Impressum.
+\subsubsection{\$IMPRESSUM\_CITY} Setzt den Ortsnamen und die Postleitzahl des Verantwortlichen im Impressum.
+\subsubsection{\$SPECIAL\_CHARS\_CAPTCHA} Schaltet Sonderzeichen in Captchas ein.
+\subsubsection{\$PRIVACY\_COMPANY\_NAME} Setzt den Namen der Firma in der Datenschutzerklärung.
+\subsubsection{\$PRIVACY\_COMPANY\_STREET} Setzt den Straßennamen und die Hausnummer der Firma in der Datenschutzerklärung.
+\subsubsection{\$PRIVACY\_COMPANY\_CITY} Setzt den Ortsnamen und die Postleitzahl der Firma in der Datenschutzerklärung.
+\subsubsection{\$PRIVACY\_COMPANY\_FON} Setzt die Telefonnummer der Firma in der Datenschutzerklärung.
+\subsubsection{\$PRIVACY\_COMPANY\_FAX} Setzt die Faxnummer der Firma in der Datenschutzerklärung.
+\subsubsection{\$PRIVACY\_COMPANY\_MAIL} Setzt die E-Mailadresse der Firma in der Datenschutzerklärung.
+\subsubsection{\$PRIVACY\_REP\_NAME} Setzt den Namen des Datenschutzbeauftragten.
+\subsubsection{\$PRIVACY\_REP\_POS} Setzt die Positionsbezeichnung des Datenschutzbeauftragten.
+\subsubsection{\$PRIVACY\_REP\_STREET} Setzt den Straßennamen und die Hausnummer des Datenschutzbeauftragten.
+\subsubsection{\$PRIVACY\_REP\_CITY} Setzt den Ortsnamen und die Postleitzahl des Datenschutzbeauftragten.
+\subsubsection{\$PRIVACY\_REP\_FON} Setzt die Telefonnummer des Datenschutzbeauftragten.
+\subsubsection{\$PRIVACY\_REP\_FAX} Setzt die Faxnummer des Datenschutzbeauftragten.
+\subsubsection{\$PRIVACY\_REP\_MAIL} Setzt die E-Mailadresse des Datenschutzbeauftragten.
+\subsubsection{\$DIRECT\_DELETE} Schaltet direktes Löschen frei.

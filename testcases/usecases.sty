@@ -1,0 +1,101 @@
+%% Use Cases Style File
+%% Created by Tom Desair (http://www.tomdesair.com)
+%% Downloadable at: http://www.tomdesair.com/downloads/use-case-latex-template.zip
+%% Date Modified: 03/04/2012
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+
+%-------------------------------------------------------------------------------
+%                Required Packages
+%-------------------------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{outlines}
+\usepackage{amssymb}
+\usepackage{ifthen}
+
+\def\LayoutTextField#1#2{% label, field
+	#2%
+}
+\def\LayoutCheckField#1#2{% label, field
+	#2 #1%
+}
+\newcommand{\checkeditem[1]}{\ifthenelse{\equal{#1}{0}}{\item}{\item[#1]} \begin{Form} \text \hfill \stepcounter{boxcounter} \CheckBox[name=Checkbox\theboxcounter]{} \end{Form}}
+%-------------------------------------------------------------------------------
+%                \addtitle command: add the title of the use case
+%-------------------------------------------------------------------------------
+\newcommand\addtitle[1]{\hline \\ [-1.5ex] \textbf{Testcase \showmycounter} & \begin{Form} \CheckBox{\textbf{#1}} \end{Form} \\ [1ex] \hline \\ [-1.5ex]}
+\newcommand\tabularhead{\begin{longtable}{lp{8.9cm}}
+}
+%-------------------------------------------------------------------------------
+%                \addfield command: add a property of the use case
+%-------------------------------------------------------------------------------
+\newcommand\addfield[2]{\textit{#1} &#2\\ [1ex] \hline \\ [-1.3ex] }
+
+%-------------------------------------------------------------------------------
+%                \addscenario command: add the main (or alternative) scenario
+%                of the use case
+%-------------------------------------------------------------------------------
+\newcommand\addscenario[2]{ 
+\multicolumn{2}{l}{\textit{#1}} \\
+\multicolumn{2}{l}{
+\begin{minipage}[t]{13.2cm} 
+    \begin{enumerate} #2   \end{enumerate}
+    \vspace{1.3ex}
+\end{minipage}
+} \\ [1ex] \hline \\ [-1.5ex] }
+
+\newcommand\addVariations[0]{ 
+	\multicolumn{2}{l}{\textit{Test mit verschiedenen Desktop Browsern, jeweils aktuellste/angegebene Version:}} \\
+	\multicolumn{2}{l}{
+		\begin{minipage}[t]{13.2cm} 
+			\begin{itemize} 
+				\item Google Chrome 87. (Stand 23.11.2020)
+				\item Firefox 85. (Stand 26.1.2021)
+				\item Opera 73. (Stand 14.1.2021)
+				\item Safari 14. (Stand 14.12.2020)
+				\item Internet Explorer 11. (Stand 6.11.2020)
+				\item Microsoft Edge 88. (Stand 26.01.2021)
+			\end{itemize}
+			\vspace{1.3ex}
+		\end{minipage}
+	} \\ [1ex] \hline \\ [-1.5ex] }
+
+\newcommand\addComment[0]{ 
+	\multicolumn{2}{l}{\textit{Bemerkungen}} \\
+	\multicolumn{2}{l}{
+		\begin{minipage}[t]{13.2cm} 
+			\begin{Form}
+				\TextField[name=Comment\themcounter,multiline=True, width=\textwidth, height=5cm]{}
+			\end{Form}
+		\vspace{1.3ex}
+		\end{minipage}
+	} \\ [1ex] \hline \\ [-1.5ex] 
+	}
+
+%-------------------------------------------------------------------------------
+%                \additemizedfield command: add a field with an item list
+%-------------------------------------------------------------------------------
+\newcommand\additemizedfield[2]{ 
+	\begin{minipage}[t][][t]{3.5cm}
+		\textit{#1}
+		\vspace{1.3ex}
+	\end{minipage}% 
+   &
+    \begin{minipage}[t][][t]{8.9cm}
+    	\begin{itemize} #2   \end{itemize}
+    	\vspace{1.5ex}
+    \end{minipage}\\ [1ex] \hline \\ [-1.5ex] }
+
+%-------------------------------------------------------------------------------
+%                Definition of the use case environment
+%-------------------------------------------------------------------------------
+\newenvironment{usecase}{\tabularhead}{\newpage\addVariations\addComment\end{longtable}}

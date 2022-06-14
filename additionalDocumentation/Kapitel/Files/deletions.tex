@@ -1,0 +1,50 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen zum löschen von Daten beziehungsweise um Daten als gelöscht zu markieren.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{deletePicByTokenDBWrap}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$apiToken  & alphanumerischer Identifikator eines Moduls \\ \hline
+		\$token     & alphanumerischer Identifikator eines Bildes \\ \hline
+		\$overwrite & Überschreibt den Konfigurationsparameter (siehe \autoref{config:direct-delete}) für direktes Löschen  \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht ein Bild oder markiert dieses als gelöscht. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Bildern
+	\item Tabelle mit Validierungsdaten zu Bildern
+\end{itemize}
+Die Funktion besitzt keinen Rückgabewert.
+\subsubsection{deleteStoryByTokenDBWrap}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$story\_token & alphanumerischer Identifikator einer Geschichte \\ \hline
+		\$overwrite    & Überschreibt den Konfigurationsparameter (siehe \autoref{config:direct-delete}) für direktes Löschen \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion löscht eine Geschichte oder markiert diese als gelöscht. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit Geschichten
+	\item Tabelle mit Validierungsdaten zu Geschichten
+\end{itemize}
+Die Funktion besitzt keinen Rückgabewert.

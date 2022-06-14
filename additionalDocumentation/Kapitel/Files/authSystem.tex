@@ -1,0 +1,121 @@
+\subsection{Allgemeines} Diese Datei enthält alle Funktionen um Nutzer zu Verwalten, Authentifizieren und Anzulegen.
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Einbindungspunkt} & inc.php \\ \hline
+		\textbf{Einbindungspunkt} & inc-sub.php \\ \hline
+	\end{tabular}
+\end{table}
+Die Datei ist nicht direkt durch den Nutzer aufrufbar, dies wird durch folgenden Code-Ausschnitt sichergestellt:
+\begin{lstlisting}[language=php]
+if (!defined('NICE_PROJECT')) {
+	die('Permission denied.');
+}
+\end{lstlisting}
+Der Globale Wert {\glqq NICE\_PROJECT\grqq} wird durch für den Nutzer valide Aufrufpunkte festgelegt, z.B. {\glqq api.php\grqq}.
+\newpage
+\subsection{Funktionen}
+\subsubsection{createNewUser}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$name      & Nutzername \\ \hline
+		\$passwd    & Passwort des neuen Nutzers als Klartext \\ \hline
+		\$email     & Nutzername \\ \hline
+		\$firstname & Nutzername \\ \hline
+		\$lastname  & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion fügt einen neuen Benutzer in das System ein. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Nutzerdaten-Tabelle
+\end{itemize}
+Die Funktion hat keinen Rückgabewert.
+\subsubsection{updateUserPassword}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$uid      & Identifikator des Nutzers \\ \hline
+		\$password & Passwort des neuen Nutzers als Klartext \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion ändert das Passwort eines Nutzers. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Nutzerdaten-Tabelle
+\end{itemize}
+Die Funktion hat keinen Rückgabewert.
+\subsubsection{checkPassword}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$password & eingegebenes Passwort als Klartext \\ \hline
+		\$username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft ein durch den Nutzer zur Authentifizierung angegebenes Passwort auf Korrektheit. Des Weiteren werden auch alle Session-Daten gesetzt. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Nutzerdaten-Tabelle
+\end{itemize}
+Die Antwort ist ein Boolean.
+\subsubsection{checkPasswordOnly}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$password & eingegebenes Passwort als Klartext \\ \hline
+		\$username & Nutzername \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft ein durch den Nutzer zur Authentifizierung angegebenes Passwort auf Korrektheit. Es werden keine Session-Daten gesetzt. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Nutzerdaten-Tabelle
+\end{itemize}
+Die Antwort ist ein Boolean.
+\subsubsection{inspectPassword}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$PasswordField1Val & Passwort Feld 1 \\ \hline
+		\$PasswordField2Val & Passwort Feld 2 \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion prüft, ob ein Passwort die gewünschten Anforderungen erfüllt. Die Funktion nutzt folgende Quellen:
+\begin{itemize}
+	\item Nutzerdaten-Tabelle
+\end{itemize}
+Die Antwort ist ein Boolean.
+\subsubsection{updateUser}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$firstname & Vorname \\ \hline
+		\$lastname  & Nachname \\ \hline
+		\$EMail     & E-Mailadresse \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion aktualisiert die Session-Daten eines Nutzers. Die Funktion hat keinen Rückgabewert.
+\subsubsection{logLogin}
+\paragraph{Parameter} Die Funktion besitzt folgende Parameter:
+\begin{table}[H]
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{Parametername} & \textbf{Parameterbeschreibung} \\ \hline
+		\$type & Typ des Logins ({\glqq Gast\grqq} oder {\glqq user\grqq}) \\ \hline
+	\end{tabular}
+\end{table}
+\paragraph{Beschreibung} Die Funktion loggt den Typ des Logins für statistische Zwecke. Die Funktion hat Auswirkungen auf folgende Quellen:
+\begin{itemize}
+	\item Tabelle mit statistischen Login-Daten
+\end{itemize}
+Die Funktion hat keinen Rückgabewert.

@@ -1,0 +1,10 @@
+\subsection{Allgemeines} Diese Datei zeigt die Datenschutzerklärung an.
+Die Datei ist direkt durch den Nutzer aufrufbar. Sie setzt auch die entsprechende Konstante und bindet alle notwendigen Dateien ein:
+\begin{lstlisting}[language=php]
+	define('NICE_PROJECT', true);
+	require_once "bin/inc.php";
+\end{lstlisting}
+\subsection{Allgemeines}
+Auf dieser Seite kann der Nutzer Datenschutzerklärung lesen. Diese Seite ist für jeden Sichtbar.
+\subsection{Besonderheiten}
+Die Seite wird im Debug-Modus nicht für jeden sichtbar angezeigt. Der Name des Verantwortlichen kann mittels der Konfigurationsparameter \autoref{config:privacy-comp-name}, \autoref{config:privacy-comp-street}, \autoref{config:privacy-comp-city}, \autoref{config:privacy-comp-fon}, \autoref{config:privacy-comp-fax} und \autoref{config:privacy-comp-mail}. Auch kann der Datenschutzverantwortliche mittels der Konfigurationsparameter \autoref{config:privacy-rep-name}, \autoref{config:privacy-rep-pos}, \autoref{config:privacy-rep-street}, \autoref{config:privacy-rep-city}, \autoref{config:privacy-rep-fon}, \autoref{config:privacy-rep-fax} und \autoref{config:privacy-rep-mail} gesetzt werden.

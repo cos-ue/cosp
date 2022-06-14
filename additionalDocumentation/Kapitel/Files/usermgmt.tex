@@ -1,0 +1,10 @@
+\subsection{Allgemeines} Diese Datei zeigt eine Auflistung aller Nutzer an.
+Die Datei ist direkt durch den Nutzer aufrufbar. Sie setzt auch die entsprechende Konstante und bindet alle notwendigen Dateien ein:
+\begin{lstlisting}[language=php]
+define('NICE_PROJECT', true);
+require_once "bin/inc.php";
+\end{lstlisting}
+\subsection{Allgemeines}
+Auf dieser Seite kann ein Administrator eine Liste aller Nutzer einsehen. Des Weiteren kann er auch die Rolle der Nutzer bearbeiten, das Passwort neu setzen, eine Mail zum Neusetzen des Passwortes versenden oder den Nutzer aktivieren/sperren.
+\subsection{Besonderheiten}
+Die Seite nutzt zum Ausführen der Funktionen teilweise JavaScript.
